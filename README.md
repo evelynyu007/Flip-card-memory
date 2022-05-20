@@ -26,6 +26,6 @@ You will get a different patterns of Dim Sum!
 
 You can also play it on phone.
 
-TODO: use 
+TODO: use api to play music
 
 
