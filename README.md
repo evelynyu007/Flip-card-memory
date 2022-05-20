@@ -1,4 +1,4 @@
-# Flip-card-memory-dim-sum
+# 🧐 Flip-card-memory 🧐
 
 # User Story
 As a user I want to
