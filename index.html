@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>♣️Flip Card Game♣️</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Login Page -->
+    <div id="login-page">
+      <h2>Create Your Account</h2>
+      <h3>Username:</h3>
+      <h3>Password:</h3>
+      <p>Choose a mode:</p>
+      <!--will add link for easy and hard -->
+      <!-- will add logic, have to choose a mode  -->
+      <input type="radio" name="mode" value="easy" />
+      <label for="easy">Easy</label>
+      <input type="radio" name="mode" value="hard" />
+      <label for="hard">Hard</label>
+      <br />
+      <!--will add logic Login to the Game Page  -->
+      <button id="Login">Login</button>
+      <p id="forgot-pswd">Forgot your password</p>
+      <input type="checkbox" name="agreement" value="agreement" />
+      <!--will add logic, box must be checked -->
+      <!--will add link to flip card memory agreement -->
+      <label for="agreenment"
+        >I have read and agree to the terms and conditions of the
+        <span class="agreement">Flip Card Memory Agreement</span></label
+      >
+    </div>
+    <!-- Game Page -->
+    <div id="game-page">
+      <section class="head-info">
+        <h2>Player: Player's Name</h2>
+        <h2>Mode:</h2>
+        <h2>Score:</h2>
+        <h2>Timer:</h2>
+      </section>
+      <div class="grid"></div>
+      <button id="button-hint">Hint</button>
+      <button id="button-restart">Restart</button>
+    </div>
+
+    <!-- Ranking Page -->
+    <div id="rank-page">
+      <h1>QS</h1>
+      <h1>World Ranking</h1>
+      <h1>Memory</h1>
+      <ul>
+        <ol>
+          #1. User Score:
+        </ol>
+        <ol>
+          #2. Albert Einstein Score:
+        </ol>
+        <ol>
+          #3. Kim Kardashian Score:
+        </ol>
+        <ol>
+          #4. Elon Musk Score:
+        </ol>
+      </ul>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
