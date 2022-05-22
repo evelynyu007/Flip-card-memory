@@ -36,18 +36,18 @@ blankCard = "img/cardCover-rotate.png";
 // create cards and data class into Grid
 // prettier-ignore
 arrCards = [
-  { name: "fry", front: "img/characters/fry.png", back:blankCard },
-  { name: "fry", front: "img/characters/fry.png" , back:blankCard},
-  { name: "homer-simpson", front: "img/characters/homer-simpson.png", back:blankCard },
-  { name: "homer-simpson", front: "img/characters/homer-simpson.png", back:blankCard },
-  { name: "homer-simpson-burnt", front: "img/characters/homer-simpson-burnt.png", back:blankCard },
-  { name: "homer-simpson-burnt", front: "img/characters/homer-simpson-burnt.png", back:blankCard },
-  { name: "mom", front: "img/characters/mom.png", back:blankCard },
-  { name: "mom", front: "img/characters/mom.png", back:blankCard },
-  { name: "professor-farnsworth", front: "img/characters/professor-farnsworth.png", back:blankCard },
-  { name: "professor-farnsworth", front: "img/characters/professor-farnsworth.png", back:blankCard },
-  { name: "zoidberg", front: "img/characters/zoidberg.png", back:blankCard },
-  { name: "zoidberg", front: "img/characters/zoidberg.png", back:blankCard },
+  { name: "fry", front: "img/characters/fry.png" },
+  { name: "fry", front: "img/characters/fry.png" },
+  { name: "homer-simpson", front: "img/characters/homer-simpson.png" },
+  { name: "homer-simpson", front: "img/characters/homer-simpson.png" },
+  { name: "homer-simpson-burnt", front: "img/characters/homer-simpson-burnt.png" },
+  { name: "homer-simpson-burnt", front: "img/characters/homer-simpson-burnt.png" },
+  { name: "mom", front: "img/characters/mom.png" },
+  { name: "mom", front: "img/characters/mom.png" },
+  { name: "professor-farnsworth", front: "img/characters/professor-farnsworth.png" },
+  { name: "professor-farnsworth", front: "img/characters/professor-farnsworth.png" },
+  { name: "zoidberg", front: "img/characters/zoidberg.png" },
+  { name: "zoidberg", front: "img/characters/zoidberg.png" },
 ];
 
 /**  Cached Element References */
@@ -55,11 +55,13 @@ const gamePage = document.querySelector("#game-page");
 const gameContainer = document.querySelector(".grid-container");
 //class element of cards image will be created right after createRandomCards
 let cardsImgClass;
+// store the rest time
+let restSeconds = document.querySelector("#restSeconds");
 
 /** FUNCTIONS */
 // Randomize Cards Pattern and append to grid-container/
 const createRandomCards = function () {
-  arrCards.sort(() => (Math.random() > 0.5 ? 1 : -1));
+  arrCards.sort(() => (Math.random() > 0.3 ? 1 : -1));
   console.log(arrCards);
   arrCards.forEach((card) => {
     let tempImg = document.createElement("img");
@@ -76,7 +78,6 @@ const createRandomCards = function () {
 const createBlankCards = function () {
   cardsImgClass.forEach((card) => {
     card.src = blankCard;
-    console.log("test");
   });
   console.log(cardsImgClass);
   console.info("stop the first Glance");
@@ -118,6 +119,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 /** 60s timer */
 // -1s every second after game begins
+setInterval;
 if (timer === 0) {
   gameOn = false;
 }
