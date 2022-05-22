@@ -16,8 +16,9 @@ const loginPage = document.querySelector("#login-page");
 /*-----------------------------------------------------------------------------*/
 
 /** Constants & Variables */
-// 1.1) an array wwith objects to represent all the cards
+// 1.1) an array wwith objects to represent all the cards and the blank card
 let arrCards = [];
+let blankCard = [];
 // 1.2) an array to represent selected two cards
 let selectedTwoCards = [];
 // 1.2) an array to represent selected Correct two cards
@@ -26,9 +27,46 @@ let selectedAllCards = [];
 let score = 0;
 // 3) 60 seconds timer
 let timer = 60;
+// 4) constants
+// create cards and data class into Grid
+// prettier-ignore
+arrCards = [
+  { name: "fry", src: "img/characters/fry.png" },
+  { name: "fry", src: "img/characters/fry.png" },
+  { name: "homer-simpson", src: "img/characters/homer-simpson.png" },
+  { name: "homer-simpson", src: "img/characters/homer-simpson.png" },
+  { name: "homer-simpson-burnt", src: "img/characters/homer-simpson-burnt.png" },
+  { name: "homer-simpson-burnt", src: "img/characters/homer-simpson-burnt.png" },
+  { name: "mom", src: "img/characters/mom.png" },
+  { name: "mom", src: "img/characters/mom.png" },
+  { name: "professor-farnsworth", src: "img/characters/professor-farnsworth.png" },
+  { name: "professor-farnsworth", src: "img/characters/professor-farnsworth.png" },
+  { name: "zoidberg", src: "img/characters/zoidberg.png" },
+  { name: "zoidberg", src: "img/characters/zoidberg.png" },
+];
+// create blank cards
+blankCard = [{ name: "blank", src: "img/cardCover.png" }];
+
 /** Event Listeners */
 const gamePage = document.querySelector("#game-page");
-const gameGrid = document.querySelector(".grid-container");
+const gameContainer = document.querySelector(".grid-container");
+
+/** FUNCTIONS */
+// Randomize Cards Pattern and append to grid-container/
+const createRandomCards = function () {
+  arrCards.sort(() => (Math.random() > 0.5 ? 1 : -1));
+  console.log(arrCards);
+  arrCards.forEach((card) => {
+    let tempCard = document.createElement("img");
+    tempCard.src = card.src;
+    tempCard.alt = "Image not found";
+    gameContainer.appendChild(tempCard);
+  });
+};
+// Hide all the cards
+const hideCards = function () {
+  gameContainer.classList.add("hide");
+};
 
 /** add background image (later: randomlize it) */
 // add it in css
@@ -38,49 +76,14 @@ const gameGrid = document.querySelector(".grid-container");
 // gamePage.appendChild(backgroundGame);
 //backgroundGame.style.backgroundImage="url(" + textNode.img + ")";
 
-/** create cards and data class id into Grid */
-
-arrCards = [
-  { name: "fry", src: "img/characters/fry.png" },
-  {
-    name: "fry",
-    src: "img/characters/fry.png",
-  },
-  { name: "homer-simpson", src: "img/characters/homer-simpson.png" },
-  { name: "homer-simpson", src: "img/characters/homer-simpson.png" },
-  {
-    name: "homer-simpson-burnt",
-    src: "img/characters/homer-simpson-burnt.png",
-  },
-  {
-    name: "homer-simpson-burnt",
-    src: "img/characters/homer-simpson-burnt.png",
-  },
-  { name: "mom", src: "img/characters/mom.png" },
-  { name: "mom", src: "img/characters/mom.png" },
-  {
-    name: "professor-farnsworth",
-    src: "img/characters/professor-farnsworth.png",
-  },
-  {
-    name: "professor-farnsworth",
-    src: "img/characters/professor-farnsworth.png",
-  },
-  { name: "zoidberg", src: "img/characters/zoidberg.png" },
-  { name: "zoidberg", src: "img/characters/zoidberg.png" },
-];
-arrCards.forEach((card) => {
-  let tempCard = document.createElement("img");
-  tempCard.src = card.src;
-  tempCard.alt = "Image not found";
-  //   tempCard.style.display = "grid";
-
-  gameGrid.appendChild(tempCard);
-});
-/** Randomize Cards Pattern */
-// arrCards.sort by Math.random * 12 +1
-
 /** Show all the cards for 3s then flip to "cardCover"*/
+// show the cards
+// BUG: need call one
+const firstGlance = setTimeout(createRandomCards(), 5000);
+const firstGlanceStop = setTimeout(hideCards(), 3000);
+
+firstGlance();
+firstGlanceStop();
 
 /** Flip two cards */
 //push the two cards into selectedTwoCards

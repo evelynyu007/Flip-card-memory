@@ -5,6 +5,11 @@ body {
   text-align: center;
 }
 
+/* Hide the element */
+.hide {
+  opacity: 0;
+}
+
 /** Login Page ---------------------------------------------------------------------------*/
 #login-page {
   display: none;
@@ -27,16 +32,18 @@ body {
   /* display: none; */
   /* TODO: randomlize backgroun picture??? */
   /* background-image: url("img/background-streaks-stripes-lines-yellow-black.png"); */
+  /* a little off center */
   /* background-image: url("img/background-concentric-white-drop-shadow-circles-purple-rings.png");
   background-size: cover; */
 }
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(4, 100px);
-  grid-template-rows: repeat(3, 100px);
-  grid-gap: 40px 30px;
+  grid-template-columns: repeat(4, 130px);
+  grid-template-rows: repeat(3, 130px);
+  grid-gap: 20px 20px;
   justify-content: center;
+  padding: 20px;
   margin-bottom: 100px;
 }
 
