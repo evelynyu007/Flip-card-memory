@@ -119,22 +119,25 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 /** 60s timer */
 // -1s every second after game begins
-// TODO: start timer after all the cards hided
-const timeInterval = setInterval(function () {
-  timer--;
-  restSeconds.textContent = timer;
-  console.log("timer:" + timer);
-  //timer warning
-  if (timer <= 10) {
-    console.warn("timer is less than 10 seconds");
-  }
-  // stop timer
-  if (timer === 0) {
-    clearInterval(timeInterval);
-    console.log("stop timer");
-    gameOn = false;
-  }
-}, 1000);
+
+setTimeout(function () {
+  const timeInterval = setInterval(function () {
+    timer--;
+    restSeconds.textContent = timer;
+    console.log("timer:" + timer);
+    //timer warning
+    // TODO: add some effects
+    if (timer <= 10) {
+      console.warn("timer is less than 10 seconds");
+    }
+    // stop timer
+    if (timer === 0) {
+      clearInterval(timeInterval);
+      console.log("stop timer");
+      gameOn = false;
+    }
+  }, 1000);
+}, 1000 + timeToHide);
 
 /** found all the corrected pair of cards */
 // check selectedAllCards.length = ;
