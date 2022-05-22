@@ -27,7 +27,9 @@ let selectedAllCards = [];
 let score = 0;
 // 3) 60 seconds timer
 let timer = 60;
-// 4) constants
+// 4) millisecond to hide the firstGlance
+let timeToHide = 3000;
+// 5) constants
 // create cards and data class into Grid
 // prettier-ignore
 arrCards = [
@@ -67,6 +69,14 @@ const createRandomCards = function () {
 const hideCards = function () {
   gameContainer.classList.add("hide");
 };
+// Show all the card in 1 s
+const firstGlanceStart = function () {
+  setTimeout(createRandomCards, 1000);
+};
+// Hide all the card in x + 1 seconds
+const firstGlanceStop = function () {
+  setTimeout(hideCards, timeToHide + 1000);
+};
 
 /** add background image (later: randomlize it) */
 // add it in css
@@ -78,12 +88,14 @@ const hideCards = function () {
 
 /** Show all the cards for 3s then flip to "cardCover"*/
 // show the cards
-// BUG: need call one
-const firstGlance = setTimeout(createRandomCards(), 5000);
-const firstGlanceStop = setTimeout(hideCards(), 3000);
+document.addEventListener("DOMContentLoaded", (event) => {
+  console.info("show and hide the first Glance");
+  firstGlanceStart();
+  firstGlanceStop();
+});
 
-firstGlance();
-firstGlanceStop();
+// firstGlance();
+// firstGlanceStop();
 
 /** Flip two cards */
 //push the two cards into selectedTwoCards
@@ -108,6 +120,10 @@ if (timer === 0) {
 // call randomize cards function, showCards1s function...
 // eventLisetenser ... gameOn = true;
 // array.length = 0;
+
+/** Hint function */
+// show a 1s glance
+// advanced: shake the picture which are same...
 
 /*------------------------------------------------------------------------------*/
 /*-------------------------------- Ranking Part (optional)----------------------*/
