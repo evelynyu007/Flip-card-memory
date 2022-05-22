@@ -30,28 +30,31 @@ let timer = 60;
 // 4) millisecond to hide the firstGlance
 let timeToHide = 3000;
 // 5) constants
+// create blank cards
+blankCard = "img/cardCover-rotate.png";
+
 // create cards and data class into Grid
 // prettier-ignore
 arrCards = [
-  { name: "fry", src: "img/characters/fry.png" },
-  { name: "fry", src: "img/characters/fry.png" },
-  { name: "homer-simpson", src: "img/characters/homer-simpson.png" },
-  { name: "homer-simpson", src: "img/characters/homer-simpson.png" },
-  { name: "homer-simpson-burnt", src: "img/characters/homer-simpson-burnt.png" },
-  { name: "homer-simpson-burnt", src: "img/characters/homer-simpson-burnt.png" },
-  { name: "mom", src: "img/characters/mom.png" },
-  { name: "mom", src: "img/characters/mom.png" },
-  { name: "professor-farnsworth", src: "img/characters/professor-farnsworth.png" },
-  { name: "professor-farnsworth", src: "img/characters/professor-farnsworth.png" },
-  { name: "zoidberg", src: "img/characters/zoidberg.png" },
-  { name: "zoidberg", src: "img/characters/zoidberg.png" },
+  { name: "fry", front: "img/characters/fry.png", back:blankCard },
+  { name: "fry", front: "img/characters/fry.png" , back:blankCard},
+  { name: "homer-simpson", front: "img/characters/homer-simpson.png", back:blankCard },
+  { name: "homer-simpson", front: "img/characters/homer-simpson.png", back:blankCard },
+  { name: "homer-simpson-burnt", front: "img/characters/homer-simpson-burnt.png", back:blankCard },
+  { name: "homer-simpson-burnt", front: "img/characters/homer-simpson-burnt.png", back:blankCard },
+  { name: "mom", front: "img/characters/mom.png", back:blankCard },
+  { name: "mom", front: "img/characters/mom.png", back:blankCard },
+  { name: "professor-farnsworth", front: "img/characters/professor-farnsworth.png", back:blankCard },
+  { name: "professor-farnsworth", front: "img/characters/professor-farnsworth.png", back:blankCard },
+  { name: "zoidberg", front: "img/characters/zoidberg.png", back:blankCard },
+  { name: "zoidberg", front: "img/characters/zoidberg.png", back:blankCard },
 ];
-// create blank cards
-blankCard = [{ name: "blank", src: "img/cardCover.png" }];
 
-/** Event Listeners */
+/**  Cached Element References */
 const gamePage = document.querySelector("#game-page");
 const gameContainer = document.querySelector(".grid-container");
+//class element of cards image will be created right after createRandomCards
+let cardsImgClass;
 
 /** FUNCTIONS */
 // Randomize Cards Pattern and append to grid-container/
@@ -59,23 +62,34 @@ const createRandomCards = function () {
   arrCards.sort(() => (Math.random() > 0.5 ? 1 : -1));
   console.log(arrCards);
   arrCards.forEach((card) => {
-    let tempCard = document.createElement("img");
-    tempCard.src = card.src;
-    tempCard.alt = "Image not found";
-    gameContainer.appendChild(tempCard);
+    let tempImg = document.createElement("img");
+    tempImg.src = card.front;
+    tempImg.classList.add("cardsImg");
+    tempImg.alt = "Image not found";
+    gameContainer.appendChild(tempImg);
   });
+  console.info("show the first Glance");
+  //create eventListen
+  cardsImgClass = document.querySelectorAll(".cardsImg");
 };
-// Hide all the cards
-const hideCards = function () {
-  gameContainer.classList.add("hide");
+// Replace cards by blank card
+const createBlankCards = function () {
+  cardsImgClass.forEach((card) => {
+    card.src = blankCard;
+    console.log("test");
+  });
+  console.log(cardsImgClass);
+  console.info("stop the first Glance");
 };
+
 // Show all the card in 1 s
 const firstGlanceStart = function () {
   setTimeout(createRandomCards, 1000);
 };
 // Hide all the card in x + 1 seconds
+// no needs to hide... Show all the blankCard instead
 const firstGlanceStop = function () {
-  setTimeout(hideCards, timeToHide + 1000);
+  setTimeout(createBlankCards, timeToHide + 1000);
 };
 
 /** add background image (later: randomlize it) */
@@ -87,15 +101,10 @@ const firstGlanceStop = function () {
 //backgroundGame.style.backgroundImage="url(" + textNode.img + ")";
 
 /** Show all the cards for 3s then flip to "cardCover"*/
-// show the cards
 document.addEventListener("DOMContentLoaded", (event) => {
-  console.info("show and hide the first Glance");
   firstGlanceStart();
   firstGlanceStop();
 });
-
-// firstGlance();
-// firstGlanceStop();
 
 /** Flip two cards */
 //push the two cards into selectedTwoCards
