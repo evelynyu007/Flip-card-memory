@@ -26,7 +26,7 @@ let selectedAllCards = [];
 // 2) score to represent current score
 let score = 0;
 // 3) 60 seconds timer
-let timer = 60;
+let timer = 15;
 // 4) millisecond to hide the firstGlance
 let timeToHide = 3000;
 // 5) constants
@@ -55,13 +55,14 @@ const gamePage = document.querySelector("#game-page");
 const gameContainer = document.querySelector(".grid-container");
 //class element of cards image will be created right after createRandomCards
 let cardsImgClass;
-// store the rest time
+// store the rest time and initialize the content
 let restSeconds = document.querySelector("#restSeconds");
+restSeconds.textContent = timer;
 
 /** FUNCTIONS */
 // Randomize Cards Pattern and append to grid-container/
 const createRandomCards = function () {
-  arrCards.sort(() => (Math.random() > 0.3 ? 1 : -1));
+  arrCards.sort(() => (Math.random() > 0.5 ? 1 : -1));
   console.log(arrCards);
   arrCards.forEach((card) => {
     let tempImg = document.createElement("img");
@@ -79,7 +80,6 @@ const createBlankCards = function () {
   cardsImgClass.forEach((card) => {
     card.src = blankCard;
   });
-  console.log(cardsImgClass);
   console.info("stop the first Glance");
 };
 
@@ -119,10 +119,22 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 /** 60s timer */
 // -1s every second after game begins
-setInterval;
-if (timer === 0) {
-  gameOn = false;
-}
+// TODO: start timer after all the cards hided
+const timeInterval = setInterval(function () {
+  timer--;
+  restSeconds.textContent = timer;
+  console.log("timer:" + timer);
+  //timer warning
+  if (timer <= 10) {
+    console.warn("timer is less than 10 seconds");
+  }
+  // stop timer
+  if (timer === 0) {
+    clearInterval(timeInterval);
+    console.log("stop timer");
+    gameOn = false;
+  }
+}, 1000);
 
 /** found all the corrected pair of cards */
 // check selectedAllCards.length = ;
