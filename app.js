@@ -8,13 +8,15 @@ let gameMode = "easy";
 let gameOn = false;
 ///LOGIN eventListener then
 gameOn = true;
+/** Event Listeners */
+const loginPage = document.querySelector("#login-page");
 
 /*-----------------------------------------------------------------------------*/
 /*-------------------------------- Game Part ----------------------------------*/
 /*-----------------------------------------------------------------------------*/
 
 /** Constants & Variables */
-// 1.1) an array to represent all the cards
+// 1.1) an array wwith objects to represent all the cards
 let arrCards = [];
 // 1.2) an array to represent selected two cards
 let selectedTwoCards = [];
@@ -26,11 +28,55 @@ let score = 0;
 let timer = 60;
 /** Event Listeners */
 const gamePage = document.querySelector("#game-page");
+const gameGrid = document.querySelector(".grid-container");
 
 /** add background image (later: randomlize it) */
+// add it in css
+// let backgroundGame = document.createElement("img");
+// backgroundGame.src =
+//   "img/background-concentric-white-drop-shadow-circles-purple-rings.png";
+// gamePage.appendChild(backgroundGame);
+//backgroundGame.style.backgroundImage="url(" + textNode.img + ")";
 
-/** Add cards and data class id into Grid */
+/** create cards and data class id into Grid */
 
+arrCards = [
+  { name: "fry", src: "img/characters/fry.png" },
+  {
+    name: "fry",
+    src: "img/characters/fry.png",
+  },
+  { name: "homer-simpson", src: "img/characters/homer-simpson.png" },
+  { name: "homer-simpson", src: "img/characters/homer-simpson.png" },
+  {
+    name: "homer-simpson-burnt",
+    src: "img/characters/homer-simpson-burnt.png",
+  },
+  {
+    name: "homer-simpson-burnt",
+    src: "img/characters/homer-simpson-burnt.png",
+  },
+  { name: "mom", src: "img/characters/mom.png" },
+  { name: "mom", src: "img/characters/mom.png" },
+  {
+    name: "professor-farnsworth",
+    src: "img/characters/professor-farnsworth.png",
+  },
+  {
+    name: "professor-farnsworth",
+    src: "img/characters/professor-farnsworth.png",
+  },
+  { name: "zoidberg", src: "img/characters/zoidberg.png" },
+  { name: "zoidberg", src: "img/characters/zoidberg.png" },
+];
+arrCards.forEach((card) => {
+  let tempCard = document.createElement("img");
+  tempCard.src = card.src;
+  tempCard.alt = "Image not found";
+  //   tempCard.style.display = "grid";
+
+  gameGrid.appendChild(tempCard);
+});
 /** Randomize Cards Pattern */
 // arrCards.sort by Math.random * 12 +1
 

@@ -5,17 +5,10 @@ body {
   text-align: center;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(100px, 4);
-  grid-template-rows: repeat(100px, 3);
-  grid-gap: 10px 10px;
-  justify-content: center;
-}
-
-/* Login Page */
+/** Login Page ---------------------------------------------------------------------------*/
 #login-page {
   display: none;
+  background-image: url("img/background-white-3d-cubes-red.png");
 }
 #forgot-pswd {
   color: blue;
@@ -26,14 +19,40 @@ body {
   text-decoration: blue;
 }
 
-/* Game Page */
+/** Game Page ----------------------------------------------------------------------------*/
 #game-page {
+  width: 100%;
+  height: 100%;
+  text-align: center;
   /* display: none; */
+  /* TODO: randomlize backgroun picture??? */
+  /* background-image: url("img/background-streaks-stripes-lines-yellow-black.png"); */
+  /* background-image: url("img/background-concentric-white-drop-shadow-circles-purple-rings.png");
+  background-size: cover; */
 }
 
-/* Ranking Page */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 100px);
+  grid-template-rows: repeat(3, 100px);
+  grid-gap: 40px 30px;
+  justify-content: center;
+  margin-bottom: 100px;
+}
+
+/* TODO: in the page center and left aligned, a different font style */
+.head-info {
+  border-style: dashed;
+  color: green;
+  font-size: x-large;
+  position: relative;
+  text-align: left;
+  margin-bottom: 80px;
+}
+
+/** Ranking Page ------------------------------------------------------------------------*/
 #rank-page {
   display: none;
 }
 
-/*** phone screen oriented @media  ***********************/
+/*** phone screen oriented @media  *******************************************************/
