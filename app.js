@@ -136,9 +136,12 @@ const addClicks = function () {
       // grab the clicked card id -
       const cardId = event.target.getAttribute("id");
       const cardName = arrCards[cardId].name;
-      // only if click different card
+      // only if click different card (by id) //TODO:
       // only if a new pair of cards
-      if (selectedAllCardsName.indexOf(cardName) === -1) {
+      if (
+        selectedAllCardsName.indexOf(cardName) === -1 &&
+        selectedTwoCardsID.indexOf(cardId) === -1
+      ) {
         console.log("valid click");
         //push the selected two cards into selectedTwoCardsName/Id
         selectedTwoCardsName.push(cardName);
@@ -185,10 +188,10 @@ const addClicks = function () {
             // score - 1 and update score in webpage
             scoreEle.textContent = --score;
           }
-        } else {
-          // do nothing?
-          console.log("do not click repeatedly");
         }
+      } else {
+        // do nothing?
+        console.log("do not click repeatedly");
       }
       // When user selects all those correct pairs
       if (selectedAllCardsName.length === arrCards.length) {
@@ -282,8 +285,9 @@ restartButton.addEventListener("click", function () {
   firstGlanceStart();
   firstGlanceStop();
   startToClick();
+  startTimer();
   // not working??
-  console.log("score: " + score); // not working??
+  console.log("score: " + score);
   console.log("timer: " + timer);
 });
 
