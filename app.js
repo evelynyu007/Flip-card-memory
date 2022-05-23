@@ -1,6 +1,15 @@
-// import gameTimer from "./gameTimer.js";
-// gameTimer();
-// didn't run..
+/*-----------------------------------------------------------------------------*/
+/*-------------------------------- Login Part ---------------------------------*/
+/*-----------------------------------------------------------------------------*/
+/** Constants & Variables */
+//LATER: password has to have at least one number, one letter
+let playerName, password, forgotPswd;
+let gameMode = "easy";
+let gameOn = false;
+///LOGIN eventListener then
+gameOn = true;
+/** Event Listeners */
+const loginPage = document.querySelector("#login-page");
 
 /*-----------------------------------------------------------------------------*/
 /*-------------------------------- Game Part ----------------------------------*/
@@ -20,7 +29,7 @@ let selectedAllCardsName = [];
 let score = 0;
 // 3) 60 seconds timer
 let timer = 60;
-// 4) millisecond to hide the firstGlance
+// 4) 3 seconds to hide the firstGlance
 let timeToHide = 3000;
 // 5) create blank cards
 blankCard = "img/cardCover-rotate.png";
@@ -47,23 +56,38 @@ arrCards = [
 ];
 
 /**  Cached Element References ********************************/
+// 1) the whole game page
 const gamePage = document.querySelector("#game-page");
+// 2) the card container
 const gameContainer = document.querySelector(".grid-container");
-//class element of cards image will be created right after createRandomCards
+// 3) class element of cards image will be created right after createCards
 let cardsImgClass;
-// store the rest time and initialize the content
+// 4) store the rest time and initialize the content
 let restSeconds = document.querySelector("#restSeconds");
 restSeconds.textContent = timer;
-// score on webpage
+// 5) score on webpage
 let scoreEle = document.querySelector("#score");
-// all the cards id
+// 6) all the cards id
 let dataIdsEle;
+// 7) Restart Button
+const restartButton = document.querySelector("#button-restart");
+// 8) HINT Button
+const hinttButton = document.querySelector("#button-hint");
 
 /** FUNCTIONS **************************************/
-// Randomize Cards Pattern and append to grid-container/
-const createRandomCards = function () {
+//////////////////////////
+// Randomize Cards Pattern
+const randomizeCards = function () {
   arrCards.sort(() => (Math.random() > 0.5 ? 1 : -1));
   console.log(arrCards);
+};
+//////////////////////////////////////////////////////////////
+// create only for the first time and append to grid-container
+const createCards = function () {
+  // once createCards it will show up in the webpage so hide it
+  gameContainer.classList.add("hide");
+  // call the randomize function
+  randomizeCards();
   //create an indentical id
   let tempId = 0;
   arrCards.forEach((card) => {
@@ -76,10 +100,25 @@ const createRandomCards = function () {
     tempImg.alt = "Image not found";
     gameContainer.appendChild(tempImg);
   });
-  console.info("show the first Glance");
+  console.info("create all the cards");
   //create elements reference - all cards class
   cardsImgClass = document.querySelectorAll(".cardsImg");
 };
+
+////////////////////////////////////////////
+// show all the cards (aka the first glance)
+const showAllCards = function () {
+  gameContainer.classList.contains("hide") &&
+    gameContainer.classList.remove("hide");
+  console.log("showAllCards called");
+  let i = 0;
+  cardsImgClass.forEach((card) => {
+    card.src = arrCards[i].front;
+    i++;
+  });
+  console.info("show the first Glance");
+};
+//////////////////////////////
 // Replace cards by blank card
 const createBlankCards = function () {
   cardsImgClass.forEach((card) => {
@@ -90,12 +129,10 @@ const createBlankCards = function () {
 
 // Add Event Listeners here otherwise it will run first
 // the app should wait for the user to click a square and call a handleClick function
-// Flip only two cards
-// FIXME: can not click correct pair of cards again!
+// Flip only two new cards
 const addClicks = function () {
   cardsImgClass.forEach((card) => {
     card.addEventListener("click", function (event) {
-      console.log(event.target);
       // grab the clicked card id -
       const cardId = event.target.getAttribute("id");
       const cardName = arrCards[cardId].name;
@@ -154,48 +191,21 @@ const addClicks = function () {
         }
       }
       // When user selects all those correct pairs
-      //   console.log(selectedAllCardsName);
       if (selectedAllCardsName.length === arrCards.length) {
         console.log("congratuations!");
         // stop the timer
         clearInterval(timeInterval);
         // stop shaking if timer <=10
+        // play hooray sound
       }
     });
   });
 };
 
-/** setTimeOut  *******************************************/
-// Show all the card in 1 s
-// FIXME: try a true/false variable
-const firstGlanceStart = function () {
-  setTimeout(createRandomCards, 1000);
-};
-// Hide all the card in x + 1 seconds
-// no needs to hide... Show all the blankCard instead
-const firstGlanceStop = function () {
-  setTimeout(createBlankCards, timeToHide + 1000);
-};
-// Start to click
-const startToClick = function () {
-  setTimeout(addClicks, timeToHide + 1000);
-};
-
-/** Start the Game ***************************************/
-document.addEventListener("DOMContentLoaded", (event) => {
-  firstGlanceStart();
-  firstGlanceStop();
-  startToClick();
-});
-
-/** if correct .. */
-// push correct two cards into selectedAllCardsName
-// score+1 otherwise score-1
-
-/** 60s timer */
+/** 60s timer *************************************************/
 // -1s every second after game begins
 // move timeInterval as a global variable
-setTimeout(function () {
+const timerFunc = function () {
   timeInterval = setInterval(function () {
     timer--;
     restSeconds.textContent = timer;
@@ -212,23 +222,70 @@ setTimeout(function () {
     if (timer === 0) {
       clearInterval(timeInterval);
       console.log("stop timer");
-      // stop shaking
+      // stop shaking - better to double check conditions
       cardsImgClass.forEach((card) => {
-        card.classList.remove("shaking");
+        card.classList.contains("shaking") && card.classList.remove("shaking");
       });
-      gameContainer.classList.remove("shaking");
+      gameContainer.classList.contains("shaking") &&
+        gameContainer.classList.remove("shaking");
 
-      // gameOn = false;
+      gameOn = false;
     }
   }, 1000);
-}, 1000 + timeToHide);
+};
+
+/** setTimeOut  *******************************************/
+// Show all the card in 1 s
+// FIXME: try a true/false variable
+const firstGlanceStart = function () {
+  setTimeout(showAllCards, 1000);
+};
+// Hide all the card in x + 1 seconds
+// no needs to hide... Show all the blankCard instead
+const firstGlanceStop = function () {
+  setTimeout(createBlankCards, timeToHide + 1000);
+};
+// Start to click
+const startToClick = function () {
+  setTimeout(addClicks, timeToHide + 1000);
+};
+// Start timer
+const startTimer = function () {
+  setTimeout(timerFunc, timeToHide + 1000);
+};
+
+/** Start the first Game ***************************************/
+document.addEventListener("DOMContentLoaded", () => {
+  createCards();
+  firstGlanceStart();
+  firstGlanceStop();
+  startToClick();
+  startTimer();
+});
 
 /** Timer for the first glance */
 
 /** restart/initialize the game */
-// call randomize cards function, showCards1s function...
-// eventLisetenser ... gameOn = true;
-// array.length = 0;
+restartButton.addEventListener("click", function () {
+  console.log("restart the game");
+  // Game on
+  gameOn = true;
+  // House Cleaning
+  selectedTwoCardsName.length = 0;
+  selectedTwoCardsID.length = 0;
+  selectedAllCardsName.length = 0;
+  score = 0;
+  timer = 60;
+
+  // call randomize cards function, showCards1s function...
+  randomizeCards();
+  firstGlanceStart();
+  firstGlanceStop();
+  startToClick();
+  // not working??
+  console.log("score: " + score); // not working??
+  console.log("timer: " + timer);
+});
 
 /** Hint function - the hardest part! */
 // show a 1s glance all the cards???
