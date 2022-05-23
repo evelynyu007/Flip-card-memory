@@ -20,18 +20,19 @@ const loginPage = document.querySelector("#login-page");
 let arrCards = [];
 let blankCard = [];
 // 1.2) an array to represent selected two cards
-let selectedTwoCards = [];
+let selectedTwoCardsArr = [];
 // 1.2) an array to represent selected Correct two cards
-let selectedAllCards = [];
+let selectedAllCardsArr = [];
 // 2) score to represent current score
 let score = 0;
 // 3) 60 seconds timer
-let timer = 15;
+let timer = 60;
 // 4) millisecond to hide the firstGlance
 let timeToHide = 3000;
-// 5) constants
-// create blank cards
+// 5) create blank cards
 blankCard = "img/cardCover-rotate.png";
+// 6) start to click(after all card hiden);
+// let startToClick = false;
 
 // create cards and data class into Grid
 // prettier-ignore
@@ -50,7 +51,7 @@ arrCards = [
   { name: "zoidberg", front: "img/characters/zoidberg.png" },
 ];
 
-/**  Cached Element References */
+/**  Cached Element References ********************************/
 const gamePage = document.querySelector("#game-page");
 const gameContainer = document.querySelector(".grid-container");
 //class element of cards image will be created right after createRandomCards
@@ -58,15 +59,21 @@ let cardsImgClass;
 // store the rest time and initialize the content
 let restSeconds = document.querySelector("#restSeconds");
 restSeconds.textContent = timer;
+// score on webpage
+let scoreEle = document.querySelector("#score");
 
-/** FUNCTIONS */
+/** FUNCTIONS **************************************/
 // Randomize Cards Pattern and append to grid-container/
 const createRandomCards = function () {
   arrCards.sort(() => (Math.random() > 0.5 ? 1 : -1));
   console.log(arrCards);
+  //create an indentical id
+  let tempId = 0;
   arrCards.forEach((card) => {
     let tempImg = document.createElement("img");
     tempImg.src = card.front;
+    tempImg.setAttribute("data-id", tempId);
+    tempId++;
     tempImg.classList.add("cardsImg");
     tempImg.alt = "Image not found";
     gameContainer.appendChild(tempImg);
@@ -82,7 +89,49 @@ const createBlankCards = function () {
   });
   console.info("stop the first Glance");
 };
+// Add Event Listeners here otherwise it will run first
+// the app should wait for the user to click a square and call a handleClick function
+// Flip only two cards
+const addClicks = function () {
+  cardsImgClass.forEach((card) => {
+    card.addEventListener("click", function (event) {
+      // FIXME: not working every time?????????
+      console.log("clicked");
+      const clickedCard = event.target;
+      //   console.log(clickedCard);
+      // grab the clicked card id
+      const cardId = this.getAttribute("data-id");
+      // console.log(cardId);
+      //flip card
+      card.src = arrCards[cardId].front;
+      //push the selected two cards into selectedTwoCardsArr
+      selectedTwoCardsArr.push(arrCards[cardId].name);
+      console.log(selectedTwoCardsArr);
+      console.log(selectedTwoCardsArr.length);
+      // Verify if two cards are same - check by their class names
+      if (selectedTwoCardsArr.length === 2) {
+        let selectedCard1 = selectedTwoCardsArr[0];
+        let selectedCard2 = selectedTwoCardsArr[1];
+        if (selectedCard1 === selectedCard2) {
+          console.log("found two same cards");
+          // reset the selectedTwoCardsArr
+          selectedTwoCardsArr.length = 0;
+          // score + 1 and update score in webpage
+          scoreEle.textContent = ++score;
+        } else {
+          // flip card to the back
+          clickedCard.src = blankCard;
+          // reset the selectedTwoCardsArr
+          selectedTwoCardsArr.length = 0;
+          // score - 1 and update score in webpage
+          scoreEle.textContent = --score;
+        }
+      }
+    });
+  });
+};
 
+/** setTimeOut  *******************************************/
 // Show all the card in 1 s
 const firstGlanceStart = function () {
   setTimeout(createRandomCards, 1000);
@@ -92,43 +141,33 @@ const firstGlanceStart = function () {
 const firstGlanceStop = function () {
   setTimeout(createBlankCards, timeToHide + 1000);
 };
+// Start to click
+const startToClick = function () {
+  setTimeout(addClicks, timeToHide + 1000);
+};
 
-/** add background image (later: randomlize it) */
-// add it in css
-// let backgroundGame = document.createElement("img");
-// backgroundGame.src =
-//   "img/background-concentric-white-drop-shadow-circles-purple-rings.png";
-// gamePage.appendChild(backgroundGame);
-//backgroundGame.style.backgroundImage="url(" + textNode.img + ")";
-
-/** Show all the cards for 3s then flip to "cardCover"*/
+/** Show all the cards for 3s then flip to "cardCover"*********/
 document.addEventListener("DOMContentLoaded", (event) => {
   firstGlanceStart();
   firstGlanceStop();
+  startToClick();
 });
 
-/** Flip two cards */
-//push the two cards into selectedTwoCards
-
-/** Verify if two cards are same */
-// check by their class names
-
 /** if correct .. */
-// push correct two cards into selectedAllCards
+// push correct two cards into selectedAllCardsArr
 // score+1 otherwise score-1
 
 /** 60s timer */
 // -1s every second after game begins
-
 setTimeout(function () {
   const timeInterval = setInterval(function () {
     timer--;
     restSeconds.textContent = timer;
-    console.log("timer:" + timer);
+    // console.log("timer:" + timer);
     //timer warning
     // TODO: add some effects
     if (timer <= 10) {
-      console.warn("timer is less than 10 seconds");
+      //   console.warn("timer is less than 10 seconds");
     }
     // stop timer
     if (timer === 0) {
@@ -140,9 +179,9 @@ setTimeout(function () {
 }, 1000 + timeToHide);
 
 /** found all the corrected pair of cards */
-// check selectedAllCards.length = ;
+// check selectedAllCardsArr.length = ;
 
-/** restart the game */
+/** restart/initialize the game */
 // call randomize cards function, showCards1s function...
 // eventLisetenser ... gameOn = true;
 // array.length = 0;
