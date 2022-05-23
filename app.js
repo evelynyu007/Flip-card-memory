@@ -1,4 +1,6 @@
-import * as gamePart from "game.js";
+// import gameTimer from "./gameTimer.js";
+// gameTimer();
+// didn't run..
 
 /*-----------------------------------------------------------------------------*/
 /*-------------------------------- Game Part ----------------------------------*/
@@ -24,6 +26,8 @@ let timeToHide = 3000;
 blankCard = "img/cardCover-rotate.png";
 // 6) start to click(after all card hiden);
 // let startToClick = false;
+// 7) timer function
+let timeInterval;
 
 // create cards and data class into Grid
 // prettier-ignore
@@ -73,10 +77,8 @@ const createRandomCards = function () {
     gameContainer.appendChild(tempImg);
   });
   console.info("show the first Glance");
-  //create eventListen
+  //create eventListen - all cards class
   cardsImgClass = document.querySelectorAll(".cardsImg");
-  /** select all cards id dom elements */
-  console.log("does dataIdsEle come out first?");
 };
 // Replace cards by blank card
 const createBlankCards = function () {
@@ -89,6 +91,7 @@ const createBlankCards = function () {
 // Add Event Listeners here otherwise it will run first
 // the app should wait for the user to click a square and call a handleClick function
 // Flip only two cards
+// FIXME: can not click correct pair of cards!
 const addClicks = function () {
   cardsImgClass.forEach((card) => {
     card.addEventListener("click", function (event) {
@@ -111,11 +114,9 @@ const addClicks = function () {
         let selectedCard2 = selectedTwoCardsName[1];
         let selectedId1 = selectedTwoCardsID[0];
         let selectedId2 = selectedTwoCardsID[1];
-
+        // store the two cards id dom elements
         let card1 = document.getElementById(selectedId1);
-        console.log(card1);
         let card2 = document.getElementById(selectedId2);
-        console.log(card2);
 
         // Verify if two cards are same
         if (selectedCard1 === selectedCard2) {
@@ -149,7 +150,9 @@ const addClicks = function () {
       //   console.log(selectedAllCardsName);
       if (selectedAllCardsName.length === arrCards.length) {
         console.log("congratuations!");
-        //reset the game
+        // stop the timer
+        clearInterval(timeInterval);
+        // stop shaking if timer <=10
       }
     });
   });
@@ -157,6 +160,7 @@ const addClicks = function () {
 
 /** setTimeOut  *******************************************/
 // Show all the card in 1 s
+// FIXME: try a true/false variable
 const firstGlanceStart = function () {
   setTimeout(createRandomCards, 1000);
 };
@@ -183,21 +187,31 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 /** 60s timer */
 // -1s every second after game begins
+// move timeInterval as a global variable
 setTimeout(function () {
-  const timeInterval = setInterval(function () {
+  timeInterval = setInterval(function () {
     timer--;
     restSeconds.textContent = timer;
-    // console.log("timer:" + timer);
-    //timer warning
-    // TODO: add some effects
-    if (timer <= 10) {
-      //   console.warn("timer is less than 10 seconds");
+    // timer warning
+    if (timer === 10) {
+      // shake each picture
+      cardsImgClass.forEach((card) => {
+        card.classList.add("shaking");
+      });
+      // shake the container - shake stronger
+      gameContainer.classList.add("shaking");
     }
     // stop timer
     if (timer === 0) {
       clearInterval(timeInterval);
       console.log("stop timer");
-      gameOn = false;
+      // stop shaking
+      cardsImgClass.forEach((card) => {
+        card.classList.remove("shaking");
+      });
+      gameContainer.classList.remove("shaking");
+
+      // gameOn = false;
     }
   }, 1000);
 }, 1000 + timeToHide);
