@@ -98,19 +98,18 @@ const addClicks = function () {
   cardsImgClass.forEach((card) => {
     card.addEventListener("click", function (event) {
       // FIXME: not working every time?????????
-      console.log("clicked");
-      const clickedCard = event.target;
-      console.log(clickedCard);
-      // grab the clicked card id
-      const cardId = this.getAttribute("data-id");
+      console.log(event.target);
+      // grab the clicked card id -
+      const cardId = event.target.getAttribute("data-id");
       selectedTwoCardsID.push(cardId);
+      console.log("cardid: " + cardId);
+      console.log("selectedTwo: " + selectedTwoCardsID);
       //flip card
       card.src = arrCards[cardId].front;
+
       //push the selected two cards into selectedTwoCardsName
       selectedTwoCardsName.push(arrCards[cardId].name);
-      console.log(selectedTwoCardsName);
-      console.log("length: " + selectedTwoCardsName.length);
-
+      console.log("selectedTwoCardsName: " + selectedTwoCardsName);
       // When we have two cards in the selectedTwoCardsName
       if (selectedTwoCardsName.length === 2) {
         //grab the only two cards
@@ -121,20 +120,37 @@ const addClicks = function () {
         // Verify if two cards are same
         if (selectedCard1 === selectedCard2) {
           console.log("found two same cards");
-          // reset the selectedTwoCardsName
+          // store in the selectedAllCardsName -repeat two times
+          selectedAllCardsName.push(selectedCard1);
+          selectedAllCardsName.push(selectedCard2);
+          // reset
           selectedTwoCardsName.length = 0;
+          selectedTwoCardsID.length = 0;
           // score + 1 and update score in webpage
           scoreEle.textContent = ++score;
         } else {
           console.log("clicked two wrong cards");
-          // flip TWO cards to the back
-          arrCards[selectedId1].src = blankCard;
-          arrCards[selectedId2].src = blankCard;
+          // flip TWO cards to the back -setTimeout 500
+          setTimeout(() => {
+            arrCards[selectedId1].src = blankCard;
+            arrCards[selectedId2].src = blankCard;
+            // BUG: it changed! but not on webpage
+            console.log(
+              "does it run? selected id: " + arrCards[selectedId1].src
+            );
+          }, 500);
+
           // reset the selectedTwoCardsName
           selectedTwoCardsName.length = 0;
           // score - 1 and update score in webpage
           scoreEle.textContent = --score;
         }
+      }
+      // When user selects all those correct pairs
+      //   console.log(selectedAllCardsName);
+      if (selectedAllCardsName.length === arrCards.length) {
+        console.log("congratuations!");
+        //reset the game
       }
     });
   });
