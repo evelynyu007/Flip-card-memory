@@ -19,10 +19,12 @@ const loginPage = document.querySelector("#login-page");
 // 1.1) an array wwith objects to represent all the cards and the blank card
 let arrCards = [];
 let blankCard = [];
-// 1.2) an array to represent selected two cards
-let selectedTwoCardsArr = [];
-// 1.2) an array to represent selected Correct two cards
-let selectedAllCardsArr = [];
+// 1.2) an array to represent selected two cards name
+let selectedTwoCardsName = [];
+// 1.3) an array to represent selecte two cards id
+let selectedTwoCardsID = [];
+// 1.4) an array to represent selected Correct two cards
+let selectedAllCardsName = [];
 // 2) score to represent current score
 let score = 0;
 // 3) 60 seconds timer
@@ -98,31 +100,38 @@ const addClicks = function () {
       // FIXME: not working every time?????????
       console.log("clicked");
       const clickedCard = event.target;
-      //   console.log(clickedCard);
+      console.log(clickedCard);
       // grab the clicked card id
       const cardId = this.getAttribute("data-id");
-      // console.log(cardId);
+      selectedTwoCardsID.push(cardId);
       //flip card
       card.src = arrCards[cardId].front;
-      //push the selected two cards into selectedTwoCardsArr
-      selectedTwoCardsArr.push(arrCards[cardId].name);
-      console.log(selectedTwoCardsArr);
-      console.log(selectedTwoCardsArr.length);
-      // Verify if two cards are same - check by their class names
-      if (selectedTwoCardsArr.length === 2) {
-        let selectedCard1 = selectedTwoCardsArr[0];
-        let selectedCard2 = selectedTwoCardsArr[1];
+      //push the selected two cards into selectedTwoCardsName
+      selectedTwoCardsName.push(arrCards[cardId].name);
+      console.log(selectedTwoCardsName);
+      console.log("length: " + selectedTwoCardsName.length);
+
+      // When we have two cards in the selectedTwoCardsName
+      if (selectedTwoCardsName.length === 2) {
+        //grab the only two cards
+        let selectedCard1 = selectedTwoCardsName[0];
+        let selectedCard2 = selectedTwoCardsName[1];
+        let selectedId1 = selectedTwoCardsID[0];
+        let selectedId2 = selectedTwoCardsID[1];
+        // Verify if two cards are same
         if (selectedCard1 === selectedCard2) {
           console.log("found two same cards");
-          // reset the selectedTwoCardsArr
-          selectedTwoCardsArr.length = 0;
+          // reset the selectedTwoCardsName
+          selectedTwoCardsName.length = 0;
           // score + 1 and update score in webpage
           scoreEle.textContent = ++score;
         } else {
-          // flip card to the back
-          clickedCard.src = blankCard;
-          // reset the selectedTwoCardsArr
-          selectedTwoCardsArr.length = 0;
+          console.log("clicked two wrong cards");
+          // flip TWO cards to the back
+          arrCards[selectedId1].src = blankCard;
+          arrCards[selectedId2].src = blankCard;
+          // reset the selectedTwoCardsName
+          selectedTwoCardsName.length = 0;
           // score - 1 and update score in webpage
           scoreEle.textContent = --score;
         }
@@ -154,7 +163,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 });
 
 /** if correct .. */
-// push correct two cards into selectedAllCardsArr
+// push correct two cards into selectedAllCardsName
 // score+1 otherwise score-1
 
 /** 60s timer */
@@ -179,7 +188,7 @@ setTimeout(function () {
 }, 1000 + timeToHide);
 
 /** found all the corrected pair of cards */
-// check selectedAllCardsArr.length = ;
+// check selectedAllCardsName.length = ;
 
 /** restart/initialize the game */
 // call randomize cards function, showCards1s function...
