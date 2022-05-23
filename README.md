@@ -1,3 +1,9 @@
+# Premise
+
+The first National Flip Cards Memory Game will begin on July 4th, 2022.
+Register as a player and Pass this primary election!
+Top 50 will be selected into the next round!
+
 # 🧐 Flip-card-memory 🧐
 
 # User Story
