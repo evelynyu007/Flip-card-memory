@@ -63,6 +63,8 @@ let restSeconds = document.querySelector("#restSeconds");
 restSeconds.textContent = timer;
 // score on webpage
 let scoreEle = document.querySelector("#score");
+// all the cards id
+let dataIdsEle;
 
 /** FUNCTIONS **************************************/
 // Randomize Cards Pattern and append to grid-container/
@@ -74,7 +76,8 @@ const createRandomCards = function () {
   arrCards.forEach((card) => {
     let tempImg = document.createElement("img");
     tempImg.src = card.front;
-    tempImg.setAttribute("data-id", tempId);
+    // tempImg.setAttribute("data-id", tempId);
+    tempImg.id = tempId;
     tempId++;
     tempImg.classList.add("cardsImg");
     tempImg.alt = "Image not found";
@@ -83,6 +86,8 @@ const createRandomCards = function () {
   console.info("show the first Glance");
   //create eventListen
   cardsImgClass = document.querySelectorAll(".cardsImg");
+  /** select all cards id dom elements */
+  console.log("does dataIdsEle come out first?");
 };
 // Replace cards by blank card
 const createBlankCards = function () {
@@ -91,16 +96,16 @@ const createBlankCards = function () {
   });
   console.info("stop the first Glance");
 };
+
 // Add Event Listeners here otherwise it will run first
 // the app should wait for the user to click a square and call a handleClick function
 // Flip only two cards
 const addClicks = function () {
   cardsImgClass.forEach((card) => {
     card.addEventListener("click", function (event) {
-      // FIXME: not working every time?????????
       console.log(event.target);
       // grab the clicked card id -
-      const cardId = event.target.getAttribute("data-id");
+      const cardId = event.target.getAttribute("id");
       selectedTwoCardsID.push(cardId);
       console.log("cardid: " + cardId);
       console.log("selectedTwo: " + selectedTwoCardsID);
@@ -110,6 +115,7 @@ const addClicks = function () {
       //push the selected two cards into selectedTwoCardsName
       selectedTwoCardsName.push(arrCards[cardId].name);
       console.log("selectedTwoCardsName: " + selectedTwoCardsName);
+
       // When we have two cards in the selectedTwoCardsName
       if (selectedTwoCardsName.length === 2) {
         //grab the only two cards
@@ -117,6 +123,12 @@ const addClicks = function () {
         let selectedCard2 = selectedTwoCardsName[1];
         let selectedId1 = selectedTwoCardsID[0];
         let selectedId2 = selectedTwoCardsID[1];
+
+        let card1 = document.getElementById(selectedId1);
+        console.log(card1);
+        let card2 = document.getElementById(selectedId2);
+        console.log(card2);
+
         // Verify if two cards are same
         if (selectedCard1 === selectedCard2) {
           console.log("found two same cards");
@@ -130,14 +142,14 @@ const addClicks = function () {
           scoreEle.textContent = ++score;
         } else {
           console.log("clicked two wrong cards");
+
           // flip TWO cards to the back -setTimeout 500
           setTimeout(() => {
-            arrCards[selectedId1].src = blankCard;
-            arrCards[selectedId2].src = blankCard;
-            // BUG: it changed! but not on webpage
-            console.log(
-              "does it run? selected id: " + arrCards[selectedId1].src
-            );
+            // not array!!!
+            card1.src = blankCard;
+            card2.src = blankCard;
+            //it changed! but not on webpage
+            console.log("does it run? ");
           }, 500);
 
           // reset the selectedTwoCardsName
