@@ -107,9 +107,8 @@ const addClicks = function () {
       // grab the clicked card id -
       const cardId = event.target.getAttribute("id");
       selectedTwoCardsID.push(cardId);
-      console.log("cardid: " + cardId);
-      console.log("selectedTwo: " + selectedTwoCardsID);
-      //flip card
+      //   console.log("cardid: " + cardId);
+      //flip card to front
       card.src = arrCards[cardId].front;
 
       //push the selected two cards into selectedTwoCardsName
@@ -145,15 +144,14 @@ const addClicks = function () {
 
           // flip TWO cards to the back -setTimeout 500
           setTimeout(() => {
-            // not array!!!
+            // change dom img source to blank
             card1.src = blankCard;
             card2.src = blankCard;
-            //it changed! but not on webpage
-            console.log("does it run? ");
-          }, 500);
+          }, 800);
 
-          // reset the selectedTwoCardsName
+          // reset
           selectedTwoCardsName.length = 0;
+          selectedTwoCardsID.length = 0;
           // score - 1 and update score in webpage
           scoreEle.textContent = --score;
         }
