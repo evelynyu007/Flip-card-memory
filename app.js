@@ -77,7 +77,7 @@ const createRandomCards = function () {
     gameContainer.appendChild(tempImg);
   });
   console.info("show the first Glance");
-  //create eventListen - all cards class
+  //create elements reference - all cards class
   cardsImgClass = document.querySelectorAll(".cardsImg");
 };
 // Replace cards by blank card
@@ -91,59 +91,66 @@ const createBlankCards = function () {
 // Add Event Listeners here otherwise it will run first
 // the app should wait for the user to click a square and call a handleClick function
 // Flip only two cards
-// FIXME: can not click correct pair of cards!
+// FIXME: can not click correct pair of cards again!
 const addClicks = function () {
   cardsImgClass.forEach((card) => {
     card.addEventListener("click", function (event) {
       console.log(event.target);
       // grab the clicked card id -
       const cardId = event.target.getAttribute("id");
-      selectedTwoCardsID.push(cardId);
-      //   console.log("cardid: " + cardId);
-      //flip card to front
-      card.src = arrCards[cardId].front;
+      const cardName = arrCards[cardId].name;
+      // only if click different card
+      // only if a new pair of cards
+      if (selectedAllCardsName.indexOf(cardName) === -1) {
+        console.log("valid click");
+        //push the selected two cards into selectedTwoCardsName/Id
+        selectedTwoCardsName.push(cardName);
+        selectedTwoCardsID.push(cardId);
 
-      //push the selected two cards into selectedTwoCardsName
-      selectedTwoCardsName.push(arrCards[cardId].name);
-      console.log("selectedTwoCardsName: " + selectedTwoCardsName);
+        //flip card to front
+        card.src = arrCards[cardId].front;
 
-      // When we have two cards in the selectedTwoCardsName
-      if (selectedTwoCardsName.length === 2) {
-        //grab the only two cards
-        let selectedCard1 = selectedTwoCardsName[0];
-        let selectedCard2 = selectedTwoCardsName[1];
-        let selectedId1 = selectedTwoCardsID[0];
-        let selectedId2 = selectedTwoCardsID[1];
-        // store the two cards id dom elements
-        let card1 = document.getElementById(selectedId1);
-        let card2 = document.getElementById(selectedId2);
+        // When we have two cards in the selectedTwoCardsName
+        if (selectedTwoCardsName.length === 2) {
+          //grab the only two cards
+          let selectedCard1 = selectedTwoCardsName[0];
+          let selectedCard2 = selectedTwoCardsName[1];
+          let selectedId1 = selectedTwoCardsID[0];
+          let selectedId2 = selectedTwoCardsID[1];
+          // store the two cards id dom elements
+          let card1 = document.getElementById(selectedId1);
+          let card2 = document.getElementById(selectedId2);
 
-        // Verify if two cards are same
-        if (selectedCard1 === selectedCard2) {
-          console.log("found two same cards");
-          // store in the selectedAllCardsName -repeat two times
-          selectedAllCardsName.push(selectedCard1);
-          selectedAllCardsName.push(selectedCard2);
-          // reset
-          selectedTwoCardsName.length = 0;
-          selectedTwoCardsID.length = 0;
-          // score + 1 and update score in webpage
-          scoreEle.textContent = ++score;
+          // Verify if two cards are same
+          if (selectedCard1 === selectedCard2) {
+            console.log("found two same cards");
+            // store in the selectedAllCardsName -repeat two times
+            selectedAllCardsName.push(selectedCard1);
+            selectedAllCardsName.push(selectedCard2);
+            // reset
+            selectedTwoCardsName.length = 0;
+            selectedTwoCardsID.length = 0;
+            // score + 1 and update score in webpage
+            scoreEle.textContent = ++score;
+          } else {
+            console.log("clicked two wrong cards");
+
+            // flip TWO cards to the back -setTimeout 500
+            setTimeout(() => {
+              // change dom img source to blank
+              card1.src = blankCard;
+              card2.src = blankCard;
+            }, 800);
+
+            // reset
+            selectedTwoCardsName.length = 0;
+            selectedTwoCardsID.length = 0;
+            // score - 1 and update score in webpage
+            scoreEle.textContent = --score;
+          }
         } else {
-          console.log("clicked two wrong cards");
-
-          // flip TWO cards to the back -setTimeout 500
-          setTimeout(() => {
-            // change dom img source to blank
-            card1.src = blankCard;
-            card2.src = blankCard;
-          }, 800);
-
-          // reset
-          selectedTwoCardsName.length = 0;
-          selectedTwoCardsID.length = 0;
-          // score - 1 and update score in webpage
-          scoreEle.textContent = --score;
+          // do nothing?
+          console.log("do not click repeatedly");
         }
       }
       // When user selects all those correct pairs
@@ -174,7 +181,7 @@ const startToClick = function () {
   setTimeout(addClicks, timeToHide + 1000);
 };
 
-/** Show all the cards for 3s then flip to "cardCover"*********/
+/** Start the Game ***************************************/
 document.addEventListener("DOMContentLoaded", (event) => {
   firstGlanceStart();
   firstGlanceStop();
@@ -216,17 +223,16 @@ setTimeout(function () {
   }, 1000);
 }, 1000 + timeToHide);
 
-/** found all the corrected pair of cards */
-// check selectedAllCardsName.length = ;
+/** Timer for the first glance */
 
 /** restart/initialize the game */
 // call randomize cards function, showCards1s function...
 // eventLisetenser ... gameOn = true;
 // array.length = 0;
 
-/** Hint function */
-// show a 1s glance
-// advanced: shake the picture which are same...
+/** Hint function - the hardest part! */
+// show a 1s glance all the cards???
+// advanced: only shake the picture which are same...
 
 /*------------------------------------------------------------------------------*/
 /*-------------------------------- Ranking Part (optional)----------------------*/
