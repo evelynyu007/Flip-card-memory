@@ -30,11 +30,6 @@ body {
   height: 100%;
   text-align: center;
   /* display: none; */
-  /* TODO: randomlize backgroun picture??? */
-  /* background-image: url("img/background-streaks-stripes-lines-yellow-black.png"); */
-  /* a little off center */
-  /* background-image: url("img/background-concentric-white-drop-shadow-circles-purple-rings.png");
-  background-size: cover; */
 }
 
 .grid-container {
@@ -44,7 +39,7 @@ body {
   grid-gap: 20px 20px;
   justify-content: center;
   padding: 20px;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 }
 
 /* TODO: in the page center and left aligned, a different font style */
@@ -96,6 +91,11 @@ body {
   100% {
     transform: translate(1px, -2px) rotate(-2deg);
   }
+}
+
+button {
+  margin-left: 30px !important;
+  margin-right: 30px !important;
 }
 
 /** Ranking Page ------------------------------------------------------------------------*/
