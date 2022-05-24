@@ -32,8 +32,8 @@ let selectedAllCardsId = [];
 const cardsIdNotFoundYet = [];
 // 2) score to represent current score
 let score = 0;
-// 3) 60 seconds timer
-let timer = 60;
+// 3) 60 seconds timer - edge case: do not set 10 and under otherwise it won't shake
+let timer = 12;
 // 4) 3 seconds to stop the firstGlance
 let timeToHide = 3000;
 // 4.1) show the firstGlance countdown
@@ -81,11 +81,20 @@ let dataIdsEle;
 // 7) Restart Button
 const restartButton = document.querySelector("#button-restart");
 // 8) HINT Button
-const hinttButton = document.querySelector("#button-hint");
+const hintButton = document.querySelector("#button-hint");
 // 9) flip TWO cards to the back -setTimeout 500
 let flipTwoBack;
 // 10) notification
 const notificationEle = document.querySelector(".notification");
+
+/**  addEventListener or capsulized functions *****************************************/
+const addClicks = function () {
+  gameContainer.addEventListener("click", flipCard);
+};
+const enableHint = function () {
+  hintButton.addEventListener("click", hintClick);
+};
+restartButton.addEventListener("click", resetClick);
 
 /** FUNCTIONS **************************************/
 //////////////////////////
@@ -172,87 +181,90 @@ const checkAllCardsFound = function () {
     // stop shaking when timer <=10
     removeCardsShaking();
     // play hooray sound
+
+    // stop clicking...
+    gameOn = false;
+    gameContainer.removeEventListener("click", flipCard);
+    hintButton.removeEventListener("click", hintClick);
   }
 };
 
 // Add Event Listeners to the gameContainer instead of cardsImgClass
 // the app should wait for the user to click a square and call a handleClick function
 // Flip only two new cards
-const addClicks = function () {
-  gameContainer.addEventListener("click", function (event) {
-    notificationEle.textContent = "⏩ keep going";
-    if (event.target.className === "cardsImg") {
-      // grab the clicked card id -
-      const cardId = event.target.getAttribute("id");
-      const cardName = arrCards[cardId].name;
-      // only if click different card (by id)
-      // only if a new pair of cards
-      if (
-        selectedAllCardsName.indexOf(cardName) === -1 &&
-        selectedTwoCardsID.indexOf(cardId) === -1
-      ) {
-        console.log("valid click");
-        //push the selected two cards into selectedTwoCardsName/Id
-        selectedTwoCardsName.push(cardName);
-        selectedTwoCardsID.push(cardId);
+function flipCard(event) {
+  notificationEle.textContent = "⏩ keep going";
+  if (event.target.className === "cardsImg") {
+    // grab the clicked card id -
+    const cardId = event.target.getAttribute("id");
+    const cardName = arrCards[cardId].name;
+    // only if click different card (by id)
+    // only if a new pair of cards
+    if (
+      selectedAllCardsName.indexOf(cardName) === -1 &&
+      selectedTwoCardsID.indexOf(cardId) === -1
+    ) {
+      console.log("valid click");
+      //push the selected two cards into selectedTwoCardsName/Id
+      selectedTwoCardsName.push(cardName);
+      selectedTwoCardsID.push(cardId);
 
-        //flip card to front
-        event.target.src = arrCards[cardId].front;
+      //flip card to front
+      event.target.src = arrCards[cardId].front;
 
-        // When we have two cards in the selectedTwoCardsName
-        if (selectedTwoCardsName.length === 2) {
-          //grab the only two cards
-          let selectedCard1 = selectedTwoCardsName[0];
-          let selectedCard2 = selectedTwoCardsName[1];
-          let selectedId1 = selectedTwoCardsID[0];
-          let selectedId2 = selectedTwoCardsID[1];
-          // store the two cards id dom elements
-          let card1 = document.getElementById(selectedId1);
-          let card2 = document.getElementById(selectedId2);
+      // When we have two cards in the selectedTwoCardsName
+      if (selectedTwoCardsName.length === 2) {
+        //grab the only two cards
+        let selectedCard1 = selectedTwoCardsName[0];
+        let selectedCard2 = selectedTwoCardsName[1];
+        let selectedId1 = selectedTwoCardsID[0];
+        let selectedId2 = selectedTwoCardsID[1];
+        // store the two cards id dom elements
+        let card1 = document.getElementById(selectedId1);
+        let card2 = document.getElementById(selectedId2);
 
-          // Verify if two cards are same
-          if (selectedCard1 === selectedCard2) {
-            console.log("found two same cards");
-            notificationEle.textContent = "✅ correct ✅";
-            // store in the selectedAllCardsName/Id -repeat two times
-            selectedAllCardsName.push(selectedCard1);
-            selectedAllCardsName.push(selectedCard2);
-            selectedAllCardsId.push(selectedId1);
-            selectedAllCardsId.push(selectedId2);
-            // reset
-            selectedTwoCardsName.length = 0;
-            selectedTwoCardsID.length = 0;
-            // score + 1 and update score in webpage
-            scoreEle.textContent = ++score;
-          } else {
-            console.log("clicked two wrong cards");
-            notificationEle.textContent = "❌ wrong ❌";
+        // Verify if two cards are same
+        if (selectedCard1 === selectedCard2) {
+          console.log("found two same cards");
+          notificationEle.textContent = "✅ correct ✅";
+          // store in the selectedAllCardsName/Id -repeat two times
+          selectedAllCardsName.push(selectedCard1);
+          selectedAllCardsName.push(selectedCard2);
+          selectedAllCardsId.push(selectedId1);
+          selectedAllCardsId.push(selectedId2);
+          // reset
+          selectedTwoCardsName.length = 0;
+          selectedTwoCardsID.length = 0;
+          // score + 1 and update score in webpage
+          scoreEle.textContent = ++score;
+        } else {
+          console.log("clicked two wrong cards");
+          notificationEle.textContent = "❌ wrong ❌";
 
-            // flip TWO cards to the back -setTimeout 700
-            flipTwoBack = function () {
-              // change dom img source to blank
-              card1.src = blankCard;
-              card2.src = blankCard;
-            };
-            setTimeout(flipTwoBack, 700);
+          // flip TWO cards to the back -setTimeout 700
+          flipTwoBack = function () {
+            // change dom img source to blank
+            card1.src = blankCard;
+            card2.src = blankCard;
+          };
+          setTimeout(flipTwoBack, 700);
 
-            // reset
-            selectedTwoCardsName.length = 0;
-            selectedTwoCardsID.length = 0;
-            // score - 1 and update score in webpage
-            scoreEle.textContent = --score;
-          }
+          // reset
+          selectedTwoCardsName.length = 0;
+          selectedTwoCardsID.length = 0;
+          // score - 1 and update score in webpage
+          scoreEle.textContent = --score;
         }
-      } else {
-        // do nothing?
-        console.log("do not click repeatedly");
-        notificationEle.textContent = "⛔️ clicked repeatedly ⛔️";
       }
-      // When user selects all those correct pairs
-      checkAllCardsFound();
+    } else {
+      // do nothing?
+      console.log("do not click repeatedly");
+      notificationEle.textContent = "⛔️ clicked repeatedly ⛔️";
     }
-  });
-};
+    // When user selects all those correct pairs
+    checkAllCardsFound();
+  }
+}
 
 /** 60s timer *************************************************/
 // -1s every second after game begins
@@ -282,7 +294,10 @@ const timerFunc = function () {
       notificationEle.textContent = "Game Over";
       // stop shaking
       removeCardsShaking();
+      // stop clicking...
       gameOn = false;
+      gameContainer.removeEventListener("click", flipCard);
+      hintButton.removeEventListener("click", hintClick);
     }
   }, 1000);
 };
@@ -310,7 +325,8 @@ const startTimer = function () {
 /** Timer for the first glance */
 
 /** restart/initialize the game */
-restartButton.addEventListener("click", function (event) {
+
+function resetClick(event) {
   // stop event bubbling - not working
   event.stopPropagation();
 
@@ -341,13 +357,15 @@ restartButton.addEventListener("click", function (event) {
   randomizeCards();
   firstGlanceStart();
   firstGlanceStop();
-  //startToClick(); //add eventListener only be added once
+  enableHint();
+  startToClick(); //add eventListener because of removeEvenListener hitted
   startTimer(); // this works correctly
-});
+}
 
-/** Hint function - the hardest part! */
+/** Hint function */
 // show a 1s glance all the cards??? then hide only unfound cards
-hinttButton.addEventListener("click", function (event) {
+
+function hintClick(event) {
   console.log("🔔 clicked hint");
   // score - 1 and update score in webpage
   scoreEle.textContent = --score;
@@ -377,7 +395,9 @@ hinttButton.addEventListener("click", function (event) {
     // need to clean the array after the hint
     cardsIdNotFoundYet.length = 0;
   }, 1000);
-});
+
+  //TODO: edge case: flip one card then hit the HINT....
+}
 
 /** Start the first Game ***************************************/
 // TODO: need to stop clicking after game stop
@@ -385,6 +405,7 @@ document.addEventListener("DOMContentLoaded", () => {
   createCards();
   firstGlanceStart();
   firstGlanceStop();
+  enableHint();
   startToClick();
   startTimer();
 });

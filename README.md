@@ -24,7 +24,7 @@ As a user I want to
 - Flip two/three different cards at the same time, score -1
 - Find all the same cards, I will hear hooray sound effect
 - Fail to find all the same cards in one mintuer, I will hear Oh No, Oh No, Oh No No No (https://www.youtube.com/watch?v=_t9y1_WRneY)
-- I can use a hint during the game, all the hided cards will be flipped over
+- I can use a hint during the game, all the hided cards will be flipped over and in 1 second, only those unselected cards flip back
 - I can enable/disable background music/sound effects by a button
 - I can play it on phone
 
