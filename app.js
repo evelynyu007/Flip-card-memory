@@ -31,8 +31,10 @@ let selectedAllCardsId = [];
 let score = 0;
 // 3) 60 seconds timer
 let timer = 60;
-// 4) 3 seconds to hide the firstGlance
+// 4) 3 seconds to stop the firstGlance
 let timeToHide = 3000;
+// 4.1) show the firstGlance countdown
+let glanceSeconds = 3;
 // 5) create blank cards
 blankCard = "img/cardCover-rotate.png";
 // 6) start to click(after all card hiden);
@@ -79,6 +81,8 @@ const restartButton = document.querySelector("#button-restart");
 const hinttButton = document.querySelector("#button-hint");
 // 9) flip TWO cards to the back -setTimeout 500
 let flipTwoBack;
+// 10) notification
+const notificationEle = document.querySelector(".notification");
 
 /** FUNCTIONS **************************************/
 //////////////////////////
@@ -116,6 +120,15 @@ const createCards = function () {
 const showAllCards = function () {
   gameContainer.classList.contains("hide") &&
     gameContainer.classList.remove("hide");
+  notificationEle.textContent = "Take a Quick Glance";
+  // 3 seconds for the glance - bug???
+  // while (glanceSeconds > 0) {
+  //   setInterval(() => {
+  //     notificationEle.textContent = glanceSeconds;
+  //     glanceSeconds--;
+  //   }, 1000);
+  // }
+
   console.log("showAllCards called");
   let i = 0;
   cardsImgClass.forEach((card) => {
@@ -127,6 +140,7 @@ const showAllCards = function () {
 //////////////////////////////
 // Replace cards by blank card
 const createBlankCards = function () {
+  notificationEle.textContent = "Game Start";
   cardsImgClass.forEach((card) => {
     card.src = blankCard;
   });
@@ -147,6 +161,7 @@ const removeCardsShaking = function () {
 const checkAllCardsFound = function () {
   if (selectedAllCardsName.length === arrCards.length) {
     console.log("🎉congratuations!");
+    notificationEle.textContent = "🎉Congratuations!";
     // stop the timer
     clearInterval(timeInterval);
     // stop shaking when timer <=10
@@ -244,11 +259,16 @@ const timerFunc = function () {
       // });
       // shake the container - shake stronger
       gameContainer.classList.add("shaking");
+      notificationEle.textContent = "The Last 10 Seconds";
+    }
+    if (timer < 10) {
+      notificationEle.textContent = timer;
     }
     // stop timer
     if (timer === 0) {
       clearInterval(timeInterval);
       console.log("stop timer");
+      notificationEle.textContent = "Game Over";
       // stop shaking
       removeCardsShaking();
       gameOn = false;
