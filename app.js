@@ -140,7 +140,7 @@ const showAllCards = function () {
 //////////////////////////////
 // Replace cards by blank card
 const createBlankCards = function () {
-  notificationEle.textContent = "Game Start";
+  notificationEle.textContent = "Game Starts";
   cardsImgClass.forEach((card) => {
     card.src = blankCard;
   });
@@ -175,6 +175,7 @@ const checkAllCardsFound = function () {
 // Flip only two new cards
 const addClicks = function () {
   gameContainer.addEventListener("click", function (event) {
+    notificationEle.textContent = "keep going";
     if (event.target.className === "cardsImg") {
       // grab the clicked card id -
       const cardId = event.target.getAttribute("id");
@@ -207,6 +208,7 @@ const addClicks = function () {
           // Verify if two cards are same
           if (selectedCard1 === selectedCard2) {
             console.log("found two same cards");
+            notificationEle.textContent = "✅ correct ✅";
             // store in the selectedAllCardsName -repeat two times
             selectedAllCardsName.push(selectedCard1);
             selectedAllCardsName.push(selectedCard2);
@@ -217,6 +219,7 @@ const addClicks = function () {
             scoreEle.textContent = ++score;
           } else {
             console.log("clicked two wrong cards");
+            notificationEle.textContent = "❌ wrong ❌";
 
             // flip TWO cards to the back -setTimeout 700
             flipTwoBack = function () {
@@ -236,6 +239,7 @@ const addClicks = function () {
       } else {
         // do nothing?
         console.log("do not click repeatedly");
+        notificationEle.textContent = "⛔️ clicked repeatedly ⛔️";
       }
       // When user selects all those correct pairs
       checkAllCardsFound();
