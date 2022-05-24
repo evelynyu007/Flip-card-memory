@@ -18,7 +18,6 @@ const loginPage = document.querySelector("#login-page");
 /** Constants & Variables */
 // 1.1) an array wwith objects to represent all the cards and the blank card
 let arrCards = [];
-let blankCard = [];
 let arrIds = [];
 // 1.2) an array to represent selected two cards names
 let selectedTwoCardsName = [];
@@ -32,16 +31,30 @@ let selectedAllCardsId = [];
 const cardsIdNotFoundYet = [];
 // 2) score to represent current score
 let score = 0;
-// 3) 60 seconds timer - edge case: do not set 10 and under otherwise it won't shake
-let timer = 12;
+// 3) 60 seconds timer
+let timer = 3;
 // 4) 3 seconds to stop the firstGlance
 let timeToHide = 3000;
 // 4.1) show the firstGlance countdown
 let glanceSeconds = 3;
-// 5) create blank cards
-blankCard = "img/cardCover-rotate.png";
-// 6) start to click(after all card hiden);
-// let startToClick = false;
+// 5.1) blank cards image
+const blankCard = "img/cardCover-rotate.png";
+// 5.2) game over image
+const gameOverImg = "url('img/background-gameover.webp')";
+// 5.3) game win image
+const gameWinImg = "url('img/background-celebration.jpg')";
+// 5.4) start game image array - random background
+const startImgArr = [
+  "url('img/background-concentric-white-drop-shadow-circles-purple-rings.png')",
+  "url('img/background-burst-rays-shadow-sunburst-yellow-turquoise.png')",
+  "url('img/background-white-3d-cubes-red.png')",
+  "url('img/background-rick.jpeg')",
+];
+let randomImg = Math.floor(Math.random() * startImgArr.length);
+let startImg = startImgArr[randomImg];
+// 5.5) image for hint
+const hintImg = "url('img/background-eyesopen.jpeg')";
+
 // 7) timer function
 let timeInterval;
 // 8) showAllCards function finished? default: no
@@ -86,6 +99,8 @@ const hintButton = document.querySelector("#button-hint");
 let flipTwoBack;
 // 10) notification
 const notificationEle = document.querySelector(".notification");
+// 11) Head-info
+const headInfoEle = document.querySelector(".head-info");
 
 /**  addEventListener or capsulized addEventListener *****************************************/
 const addClicks = function () {
@@ -96,13 +111,26 @@ const enableHint = function () {
 };
 restartButton.addEventListener("click", resetClick);
 
-/** FUNCTIONS **************************************/
+/** FUNCTIONS *********************************************************/
 //////////////////////////
 // Randomize Cards Pattern
 const randomizeCards = function () {
   arrCards.sort(() => (Math.random() > 0.5 ? 1 : -1));
   console.log(arrCards);
 };
+///////////////////////////
+// change background image
+const changeBackgroundImg = function (img) {
+  headInfoEle.style.backgroundImage = img;
+};
+
+// Randomize background image
+function randomizeBackgroundImg() {
+  randomImg = Math.floor(Math.random() * startImgArr.length);
+  startImg = startImgArr[randomImg];
+  changeBackgroundImg(startImg);
+}
+
 //////////////////////////////////////////////////////////////
 // create only for the first time and append to grid-container
 const createCards = function () {
@@ -115,11 +143,9 @@ const createCards = function () {
   arrCards.forEach((card) => {
     let tempImg = document.createElement("img");
     tempImg.src = card.front;
-    // tempImg.setAttribute("data-id", tempId);
     tempImg.id = tempId;
     arrIds.push(tempId);
     tempId++;
-
     tempImg.classList.add("cardsImg");
     tempImg.alt = "Image not found";
     gameContainer.appendChild(tempImg);
@@ -162,6 +188,8 @@ const removeCardsShaking = function () {
   });
   gameContainer.classList.contains("shaking") &&
     gameContainer.classList.remove("shaking");
+  notificationEle.classList.contains("shaking") &&
+    notificationEle.classList.remove("shaking");
 };
 
 ///////////////////////////
@@ -174,8 +202,8 @@ const checkAllCardsFound = function () {
     clearInterval(timeInterval);
     // stop shaking when timer <=10
     removeCardsShaking();
-    // play hooray sound
-
+    // update background img
+    headInfoEle.style.backgroundImage = gameWinImg;
     // stop clicking...
     gameOn = false;
     gameContainer.removeEventListener("click", flipCard);
@@ -251,7 +279,6 @@ function flipCard(event) {
         }
       }
     } else {
-      // do nothing?
       console.log("do not click repeatedly");
       notificationEle.textContent = "⛔️ clicked repeatedly ⛔️";
     }
@@ -268,21 +295,22 @@ const timerFunc = function () {
     timer--;
     restSeconds.textContent = timer;
     // timer warning
-    if (timer === 10) {
+    if (timer < 10) {
       // shake each picture
       cardsImgClass.forEach((card) => {
-        card.classList.add("shaking");
+        card.classList.contains("shaking") || card.classList.add("shaking");
       });
 
       // shake the container - shake stronger
-      gameContainer.classList.add("shaking");
-      notificationEle.textContent = "The Last 10 Seconds";
-    }
-    if (timer < 10) {
+      gameContainer.classList.contains("shaking") ||
+        gameContainer.classList.add("shaking");
       notificationEle.textContent = timer;
+      notificationEle.classList.contains("shaking") ||
+        notificationEle.classList.add("shaking");
+      // notificationEle.style.color = red;
     }
     // stop timer
-    if (timer === 0) {
+    if (timer < 0) {
       clearInterval(timeInterval);
       console.log("stop timer");
       notificationEle.textContent = "Game Over";
@@ -292,6 +320,8 @@ const timerFunc = function () {
       gameOn = false;
       gameContainer.removeEventListener("click", flipCard);
       hintButton.removeEventListener("click", hintClick);
+      // update background img
+      headInfoEle.style.backgroundImage = gameOverImg;
     }
   }, 1000);
 };
@@ -323,9 +353,6 @@ const startTimer = function () {
 //////////////////////////////////
 /** restart/initialize the game */
 function resetClick(event) {
-  // stop event bubbling - not working
-  event.stopPropagation();
-
   console.log("🔂 restart the game");
   // Game on
   gameOn = true;
@@ -349,7 +376,8 @@ function resetClick(event) {
   clearInterval(timeInterval);
 
   // ////////////////////////////////////////////////////////
-  // call randomize cards function, showCards1s function...
+  // call randomize background img, cards function, showCards1s function...
+  randomizeBackgroundImg();
   randomizeCards();
   firstGlanceStart();
   firstGlanceStop();
@@ -358,11 +386,13 @@ function resetClick(event) {
   startTimer(); // this works correctly
 }
 
-/** Hint function */
-// show a 1s glance all the cards??? then hide only unfound cards
-
+////////////////
+// Hint function
+// show a 1s glance all the cards - then hide only unfound cards
 function hintClick(event) {
   console.log("🔔 clicked hint");
+  // update the background img
+  changeBackgroundImg(hintImg);
   // score - 1 and update score in webpage
   scoreEle.textContent = --score;
 
@@ -398,6 +428,7 @@ function hintClick(event) {
 
 /** Start the first Game ***************************************/
 document.addEventListener("DOMContentLoaded", () => {
+  changeBackgroundImg(startImg);
   createCards();
   firstGlanceStart();
   firstGlanceStop();

@@ -39,18 +39,34 @@ body {
   grid-gap: 20px 20px;
   justify-content: center;
   padding: 20px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
-/* TODO: in the page center and left aligned, a different font style */
 .head-info {
   border-style: dashed;
-  color: green;
-  font-size: x-large;
-  position: relative;
-  text-align: left;
-  margin-bottom: 80px;
+  border-width: 12px;
+  color: black;
+  border-color: rgb(50, 100, 50);
+  font-size: 40px;
+  background-image: url("img/background-burst-rays-shadow-sunburst-yellow-turquoise.png");
+  background-position: center;
+  background-size: cover;
+  background-color: #b9abab; /* Used if the image is unavailable */
+  margin-bottom: 50px;
+  padding: 20px 20px;
+  height: 400px;
 }
+
+h2 {
+  position: relative;
+  text-align: center;
+}
+
+.notification {
+  margin-top: 40px;
+  font-size: 60px;
+}
+
 /* shake all the cards */
 /* code is from https://www.w3schools.com/howto/howto_css_shake_image.asp */
 .shaking {
@@ -96,6 +112,7 @@ body {
 button {
   margin-left: 30px !important;
   margin-right: 30px !important;
+  margin-bottom: 50px !important;
 }
 
 /** Ranking Page ------------------------------------------------------------------------*/
