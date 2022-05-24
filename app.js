@@ -303,29 +303,31 @@ const timerFunc = function () {
 };
 
 /** setTimeOut  *******************************************/
-// Show all the card in 1 s
+
 // FIXME: try a true/false variable
+////////////////////////////
+// Show all the card in 1 s
 const firstGlanceStart = function () {
   setTimeout(showAllCards, 1000);
 };
+/////////////////////////////////////
 // Hide all the card in x + 1 seconds
-// no needs to hide... Show all the blankCard instead
 const firstGlanceStop = function () {
   setTimeout(createBlankCards, timeToHide + 1000);
 };
+/////////////////
 // Start to click
 const startToClick = function () {
   setTimeout(addClicks, timeToHide + 1000);
 };
+//////////////
 // Start timer
 const startTimer = function () {
   setTimeout(timerFunc, timeToHide + 1000);
 };
 
-/** Timer for the first glance */
-
+//////////////////////////////////
 /** restart/initialize the game */
-
 function resetClick(event) {
   // stop event bubbling - not working
   event.stopPropagation();
@@ -394,13 +396,13 @@ function hintClick(event) {
     });
     // need to clean the array after the hint
     cardsIdNotFoundYet.length = 0;
+    //edge case: flipped one card then hit the HINT....
+    selectedTwoCardsID.length = 0;
+    selectedTwoCardsName.length = 0;
   }, 1000);
-
-  //TODO: edge case: flip one card then hit the HINT....
 }
 
 /** Start the first Game ***************************************/
-// TODO: need to stop clicking after game stop
 document.addEventListener("DOMContentLoaded", () => {
   createCards();
   firstGlanceStart();
