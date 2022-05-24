@@ -19,6 +19,7 @@ const loginPage = document.querySelector("#login-page");
 // 1.1) an array wwith objects to represent all the cards and the blank card
 let arrCards = [];
 let blankCard = [];
+let arrIds = [];
 // 1.2) an array to represent selected two cards names
 let selectedTwoCardsName = [];
 // 1.3) an array to represent selecte two cards ids
@@ -27,6 +28,8 @@ let selectedTwoCardsID = [];
 let selectedAllCardsName = [];
 // 1.5) an array to represent selected Correct cards ids
 let selectedAllCardsId = [];
+// 1.6) store all the unfound cards id
+const cardsIdNotFoundYet = [];
 // 2) score to represent current score
 let score = 0;
 // 3) 60 seconds timer
@@ -96,7 +99,7 @@ const randomizeCards = function () {
 const createCards = function () {
   // once createCards it will show up in the webpage so hide it
   gameContainer.classList.add("hide");
-  // call the randomize function
+  // call the randomize function - randomize before creating id -then id will always from 0 ..11
   randomizeCards();
   //create an indentical id
   let tempId = 0;
@@ -105,7 +108,9 @@ const createCards = function () {
     tempImg.src = card.front;
     // tempImg.setAttribute("data-id", tempId);
     tempImg.id = tempId;
+    arrIds.push(tempId);
     tempId++;
+
     tempImg.classList.add("cardsImg");
     tempImg.alt = "Image not found";
     gameContainer.appendChild(tempImg);
@@ -160,8 +165,8 @@ const removeCardsShaking = function () {
 // check if all cards found
 const checkAllCardsFound = function () {
   if (selectedAllCardsName.length === arrCards.length) {
-    console.log("🎉congratuations!");
-    notificationEle.textContent = "🎉Congratuations!";
+    console.log("🎉congratulaions!");
+    notificationEle.textContent = "🎉You are the best!";
     // stop the timer
     clearInterval(timeInterval);
     // stop shaking when timer <=10
@@ -175,7 +180,7 @@ const checkAllCardsFound = function () {
 // Flip only two new cards
 const addClicks = function () {
   gameContainer.addEventListener("click", function (event) {
-    notificationEle.textContent = "keep going";
+    notificationEle.textContent = "⏩ keep going";
     if (event.target.className === "cardsImg") {
       // grab the clicked card id -
       const cardId = event.target.getAttribute("id");
@@ -209,9 +214,11 @@ const addClicks = function () {
           if (selectedCard1 === selectedCard2) {
             console.log("found two same cards");
             notificationEle.textContent = "✅ correct ✅";
-            // store in the selectedAllCardsName -repeat two times
+            // store in the selectedAllCardsName/Id -repeat two times
             selectedAllCardsName.push(selectedCard1);
             selectedAllCardsName.push(selectedCard2);
+            selectedAllCardsId.push(selectedId1);
+            selectedAllCardsId.push(selectedId2);
             // reset
             selectedTwoCardsName.length = 0;
             selectedTwoCardsID.length = 0;
@@ -314,6 +321,9 @@ restartButton.addEventListener("click", function (event) {
   selectedTwoCardsName.length = 0;
   selectedTwoCardsID.length = 0;
   selectedAllCardsName.length = 0;
+  selectedAllCardsId.length = 0;
+  cardsIdNotFoundYet.length = 0;
+
   score = 0;
   timer = 60;
   //remove shaking class? edge case: click restart when shaking
@@ -336,18 +346,41 @@ restartButton.addEventListener("click", function (event) {
 });
 
 /** Hint function - the hardest part! */
-// show a 1s glance all the cards???
-// advanced: only shake two same picture(cannot shake in last 10s)
+// show a 1s glance all the cards??? then hide only unfound cards
 hinttButton.addEventListener("click", function (event) {
   console.log("🔔 clicked hint");
   // score - 1 and update score in webpage
   scoreEle.textContent = --score;
+
+  console.log("all cards id found: ");
+  console.log(selectedAllCardsId); //character
+
   // store all the unfound cards id
-  const cardsIdNotFoundYet = [];
+  arrIds.forEach((id) => {
+    if (selectedAllCardsId.indexOf(id.toString()) === -1) {
+      cardsIdNotFoundYet.push(id.toString());
+    }
+  });
+  console.log("cards id not found:");
+  console.log(cardsIdNotFoundYet);
+
+  notificationEle.textContent = "🍀 Hint";
+  cardsIdNotFoundYet.forEach((id) => {
+    cardsImgClass[id].src = arrCards[id].front;
+  });
+  //hide them after 1 second
+  setTimeout(() => {
+    notificationEle.textContent = "⏩ keep going";
+    cardsIdNotFoundYet.forEach((id) => {
+      cardsImgClass[id].src = blankCard;
+    });
+    // need to clean the array after the hint
+    cardsIdNotFoundYet.length = 0;
+  }, 1000);
 });
 
 /** Start the first Game ***************************************/
-
+// TODO: need to stop clicking after game stop
 document.addEventListener("DOMContentLoaded", () => {
   createCards();
   firstGlanceStart();
