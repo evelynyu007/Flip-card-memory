@@ -37,6 +37,8 @@ blankCard = "img/cardCover-rotate.png";
 // let startToClick = false;
 // 7) timer function
 let timeInterval;
+// 8) first time game? need to create cards
+// let firstTimeGame = true;
 
 // create cards and data class into Grid
 // prettier-ignore
@@ -73,6 +75,8 @@ let dataIdsEle;
 const restartButton = document.querySelector("#button-restart");
 // 8) HINT Button
 const hinttButton = document.querySelector("#button-hint");
+// 9) flip TWO cards to the back -setTimeout 500
+let flipTwoBack;
 
 /** FUNCTIONS **************************************/
 //////////////////////////
@@ -126,17 +130,28 @@ const createBlankCards = function () {
   });
   console.info("stop the first Glance");
 };
+///////////////////////////
+// check if all cards found
+const checkAllCardsFound = function () {
+  if (selectedAllCardsName.length === arrCards.length) {
+    console.log("🎉congratuations!");
+    // stop the timer
+    clearInterval(timeInterval);
+    // stop shaking if timer <=10
+    // play hooray sound
+  }
+};
 
-// Add Event Listeners here otherwise it will run first
+// Add Event Listeners to the gameContainer instead of cardsImgClass
 // the app should wait for the user to click a square and call a handleClick function
 // Flip only two new cards
 const addClicks = function () {
-  cardsImgClass.forEach((card) => {
-    card.addEventListener("click", function (event) {
+  gameContainer.addEventListener("click", function (event) {
+    if (event.target.className === "cardsImg") {
       // grab the clicked card id -
       const cardId = event.target.getAttribute("id");
       const cardName = arrCards[cardId].name;
-      // only if click different card (by id) //TODO:
+      // only if click different card (by id)
       // only if a new pair of cards
       if (
         selectedAllCardsName.indexOf(cardName) === -1 &&
@@ -148,7 +163,7 @@ const addClicks = function () {
         selectedTwoCardsID.push(cardId);
 
         //flip card to front
-        card.src = arrCards[cardId].front;
+        event.target.src = arrCards[cardId].front;
 
         // When we have two cards in the selectedTwoCardsName
         if (selectedTwoCardsName.length === 2) {
@@ -175,12 +190,13 @@ const addClicks = function () {
           } else {
             console.log("clicked two wrong cards");
 
-            // flip TWO cards to the back -setTimeout 500
-            setTimeout(() => {
+            // flip TWO cards to the back -setTimeout 700
+            flipTwoBack = function () {
               // change dom img source to blank
               card1.src = blankCard;
               card2.src = blankCard;
-            }, 800);
+            };
+            setTimeout(flipTwoBack, 700);
 
             // reset
             selectedTwoCardsName.length = 0;
@@ -194,14 +210,8 @@ const addClicks = function () {
         console.log("do not click repeatedly");
       }
       // When user selects all those correct pairs
-      if (selectedAllCardsName.length === arrCards.length) {
-        console.log("congratuations!");
-        // stop the timer
-        clearInterval(timeInterval);
-        // stop shaking if timer <=10
-        // play hooray sound
-      }
-    });
+      checkAllCardsFound();
+    }
   });
 };
 
@@ -257,19 +267,13 @@ const startTimer = function () {
   setTimeout(timerFunc, timeToHide + 1000);
 };
 
-/** Start the first Game ***************************************/
-document.addEventListener("DOMContentLoaded", () => {
-  createCards();
-  firstGlanceStart();
-  firstGlanceStop();
-  startToClick();
-  startTimer();
-});
-
 /** Timer for the first glance */
 
 /** restart/initialize the game */
-restartButton.addEventListener("click", function () {
+restartButton.addEventListener("click", function (event) {
+  // stop event bubbling - not working
+  event.stopPropagation();
+
   console.log("restart the game");
   // Game on
   gameOn = true;
@@ -279,21 +283,42 @@ restartButton.addEventListener("click", function () {
   selectedAllCardsName.length = 0;
   score = 0;
   timer = 60;
+  //remove shaking class?
 
+  clearTimeout(firstGlanceStart);
+  clearTimeout(firstGlanceStop);
+  clearTimeout(startToClick);
+  clearTimeout(flipTwoBack);
+  // don't forget to clear timeInterval!
+  clearInterval(timeInterval);
+
+  // QA: arrays are good
+  console.log("two name: " + selectedTwoCardsName);
+  console.log("two id: " + selectedTwoCardsID);
+  console.log("all name" + selectedAllCardsName);
+
+  // ////////////////////////////////////////////////////////
   // call randomize cards function, showCards1s function...
   randomizeCards();
   firstGlanceStart();
   firstGlanceStop();
-  startToClick();
-  startTimer();
-  // not working??
-  console.log("score: " + score);
-  console.log("timer: " + timer);
+  //startToClick(); //add eventListener only be added once
+  startTimer(); // this works correctly
 });
 
 /** Hint function - the hardest part! */
 // show a 1s glance all the cards???
 // advanced: only shake the picture which are same...
+
+/** Start the first Game ***************************************/
+
+document.addEventListener("DOMContentLoaded", () => {
+  createCards();
+  firstGlanceStart();
+  firstGlanceStop();
+  startToClick();
+  startTimer();
+});
 
 /*------------------------------------------------------------------------------*/
 /*-------------------------------- Ranking Part (optional)----------------------*/
