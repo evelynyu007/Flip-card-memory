@@ -28,7 +28,7 @@ let selectedAllCardsName = [];
 // 2) score to represent current score
 let score = 0;
 // 3) 60 seconds timer
-let timer = 60;
+let timer = 12;
 // 4) 3 seconds to hide the firstGlance
 let timeToHide = 3000;
 // 5) create blank cards
@@ -130,6 +130,16 @@ const createBlankCards = function () {
   });
   console.info("stop the first Glance");
 };
+///////////////////////
+// remove cards shaking
+const removeCardsShaking = function () {
+  cardsImgClass.forEach((card) => {
+    card.classList.contains("shaking") && card.classList.remove("shaking");
+  });
+  gameContainer.classList.contains("shaking") &&
+    gameContainer.classList.remove("shaking");
+};
+
 ///////////////////////////
 // check if all cards found
 const checkAllCardsFound = function () {
@@ -137,7 +147,8 @@ const checkAllCardsFound = function () {
     console.log("🎉congratuations!");
     // stop the timer
     clearInterval(timeInterval);
-    // stop shaking if timer <=10
+    // stop shaking when timer <=10
+    removeCardsShaking();
     // play hooray sound
   }
 };
@@ -223,11 +234,13 @@ const timerFunc = function () {
     timer--;
     restSeconds.textContent = timer;
     // timer warning
+
     if (timer === 10) {
       // shake each picture
-      cardsImgClass.forEach((card) => {
-        card.classList.add("shaking");
-      });
+      // BUG: when each card shaking, cannot click!!
+      // cardsImgClass.forEach((card) => {
+      //   card.classList.add("shaking");
+      // });
       // shake the container - shake stronger
       gameContainer.classList.add("shaking");
     }
@@ -235,13 +248,8 @@ const timerFunc = function () {
     if (timer === 0) {
       clearInterval(timeInterval);
       console.log("stop timer");
-      // stop shaking - better to double check conditions
-      cardsImgClass.forEach((card) => {
-        card.classList.contains("shaking") && card.classList.remove("shaking");
-      });
-      gameContainer.classList.contains("shaking") &&
-        gameContainer.classList.remove("shaking");
-
+      // stop shaking
+      removeCardsShaking();
       gameOn = false;
     }
   }, 1000);
@@ -283,7 +291,8 @@ restartButton.addEventListener("click", function (event) {
   selectedAllCardsName.length = 0;
   score = 0;
   timer = 60;
-  //remove shaking class?
+  //remove shaking class? edge case: click restart when shaking
+  removeCardsShaking();
 
   clearTimeout(firstGlanceStart);
   clearTimeout(firstGlanceStop);
