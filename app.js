@@ -44,8 +44,8 @@ blankCard = "img/cardCover-rotate.png";
 // let startToClick = false;
 // 7) timer function
 let timeInterval;
-// 8) first time game? need to create cards
-// let firstTimeGame = true;
+// 8) showAllCards function finished? default: no
+let showAllCardsFunc = false;
 
 // create cards and data class into Grid
 // prettier-ignore
@@ -87,7 +87,7 @@ let flipTwoBack;
 // 10) notification
 const notificationEle = document.querySelector(".notification");
 
-/**  addEventListener or capsulized functions *****************************************/
+/**  addEventListener or capsulized addEventListener *****************************************/
 const addClicks = function () {
   gameContainer.addEventListener("click", flipCard);
 };
@@ -135,15 +135,9 @@ const showAllCards = function () {
   gameContainer.classList.contains("hide") &&
     gameContainer.classList.remove("hide");
   notificationEle.textContent = "Take a Quick Glance";
-  // 3 seconds for the glance - bug???
-  // while (glanceSeconds > 0) {
-  //   setInterval(() => {
-  //     notificationEle.textContent = glanceSeconds;
-  //     glanceSeconds--;
-  //   }, 1000);
-  // }
 
   console.log("showAllCards called");
+  showAllCardsFunc = true;
   let i = 0;
   cardsImgClass.forEach((card) => {
     card.src = arrCards[i].front;
@@ -194,7 +188,7 @@ const checkAllCardsFound = function () {
 // Flip only two new cards
 function flipCard(event) {
   notificationEle.textContent = "⏩ keep going";
-  if (event.target.className === "cardsImg") {
+  if (event.target.className.indexOf("cardsImg") > -1) {
     // grab the clicked card id -
     const cardId = event.target.getAttribute("id");
     const cardName = arrCards[cardId].name;
@@ -276,10 +270,10 @@ const timerFunc = function () {
     // timer warning
     if (timer === 10) {
       // shake each picture
-      // BUG: when each card shaking, cannot click!!
-      // cardsImgClass.forEach((card) => {
-      //   card.classList.add("shaking");
-      // });
+      cardsImgClass.forEach((card) => {
+        card.classList.add("shaking");
+      });
+
       // shake the container - shake stronger
       gameContainer.classList.add("shaking");
       notificationEle.textContent = "The Last 10 Seconds";
@@ -304,7 +298,7 @@ const timerFunc = function () {
 
 /** setTimeOut  *******************************************/
 
-// FIXME: try a true/false variable
+// NOTE: Tried a true/false showAllCardsFunc, it didn't work..
 ////////////////////////////
 // Show all the card in 1 s
 const firstGlanceStart = function () {
