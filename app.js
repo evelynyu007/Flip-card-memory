@@ -19,16 +19,18 @@ const loginPage = document.querySelector("#login-page");
 // 1.1) an array wwith objects to represent all the cards and the blank card
 let arrCards = [];
 let blankCard = [];
-// 1.2) an array to represent selected two cards name
+// 1.2) an array to represent selected two cards names
 let selectedTwoCardsName = [];
-// 1.3) an array to represent selecte two cards id
+// 1.3) an array to represent selecte two cards ids
 let selectedTwoCardsID = [];
-// 1.4) an array to represent selected Correct two cards
+// 1.4) an array to represent selected Correct cards names
 let selectedAllCardsName = [];
+// 1.5) an array to represent selected Correct cards ids
+let selectedAllCardsId = [];
 // 2) score to represent current score
 let score = 0;
 // 3) 60 seconds timer
-let timer = 12;
+let timer = 60;
 // 4) 3 seconds to hide the firstGlance
 let timeToHide = 3000;
 // 5) create blank cards
@@ -234,7 +236,6 @@ const timerFunc = function () {
     timer--;
     restSeconds.textContent = timer;
     // timer warning
-
     if (timer === 10) {
       // shake each picture
       // BUG: when each card shaking, cannot click!!
@@ -282,7 +283,7 @@ restartButton.addEventListener("click", function (event) {
   // stop event bubbling - not working
   event.stopPropagation();
 
-  console.log("restart the game");
+  console.log("🔂 restart the game");
   // Game on
   gameOn = true;
   // House Cleaning
@@ -301,11 +302,6 @@ restartButton.addEventListener("click", function (event) {
   // don't forget to clear timeInterval!
   clearInterval(timeInterval);
 
-  // QA: arrays are good
-  console.log("two name: " + selectedTwoCardsName);
-  console.log("two id: " + selectedTwoCardsID);
-  console.log("all name" + selectedAllCardsName);
-
   // ////////////////////////////////////////////////////////
   // call randomize cards function, showCards1s function...
   randomizeCards();
@@ -317,7 +313,14 @@ restartButton.addEventListener("click", function (event) {
 
 /** Hint function - the hardest part! */
 // show a 1s glance all the cards???
-// advanced: only shake the picture which are same...
+// advanced: only shake two same picture(cannot shake in last 10s)
+hinttButton.addEventListener("click", function (event) {
+  console.log("🔔 clicked hint");
+  // score - 1 and update score in webpage
+  scoreEle.textContent = --score;
+  // store all the unfound cards id
+  const cardsIdNotFoundYet = [];
+});
 
 /** Start the first Game ***************************************/
 
