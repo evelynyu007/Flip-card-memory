@@ -17,28 +17,41 @@
   <body>
     <!-- Login Page ----------------------------------------------------->
     <div id="login-page">
-      <h2>Create Your Account</h2>
-      <h3>Username:</h3>
-      <h3>Password:</h3>
-      <p>Choose a mode:</p>
-      <!--will add link for easy and hard -->
-      <!-- will add logic, have to choose a mode  -->
-      <input type="radio" name="mode" value="easy" />
-      <label for="easy">Easy</label>
-      <input type="radio" name="mode" value="hard" />
-      <label for="hard">Hard</label>
-      <br />
-      <!--will add logic Login to the Game Page  -->
-      <button id="Login">Login</button>
-      <p id="forgot-pswd">Forgot your password</p>
-      <input type="checkbox" name="agreement" value="agreement" />
-      <!--will add logic, box must be checked -->
-      <!--will add link to flip card memory agreement -->
-      <label for="agreenment"
-        >I have read and agree to the terms and conditions of the
-        <span class="agreement">Flip Card Memory Agreement</span></label
-      >
-      <button id="button-login" class="btn btn-success btn-lg">Login</button>
+      <form id="form" action="/" method="get">
+        <h2>Create Your Account</h2>
+        <label for="userName">Username:</label>
+        <input type="text" name="userName" id="userName" required />
+        <br />
+        <label for="userEmail">Email:</label>
+        <input type="email" name="userEmail" id="userEmail" />
+        <br />
+
+        <p>Choose a mode:</p>
+        <input
+          type="radio"
+          id="easyMode"
+          name="mode"
+          value="easy"
+          checked="checked"
+        />
+        <label for="easyMode">Easy</label>
+        <input type="radio" id="hardMode" name="mode" value="hard" />
+        <label for="hardMode">Hard</label>
+        <br />
+
+        <input type="checkbox" name="agreement" value="agreement" required />
+        <label for="agreenment"
+          >I have read and agree to the terms and conditions of the
+          <span class="agreement">Flip Card Memory Game® Agreement</span></label
+        >
+        <!--will add logic, box must be checked -->
+        <!--will add link to flip card memory agreement -->
+        <button type="submit" id="button-login" class="btn btn-success btn-lg">
+          Login
+        </button>
+      </form>
+
+      <!-- <p id="forgot-pswd">Forgot your password</p> -->
     </div>
 
     <!-- Game Page -------------------------------------------------------->

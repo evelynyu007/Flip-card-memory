@@ -1,23 +1,44 @@
 /*-----------------------------------------------------------------------------*/
+/*-------------------------------- Page hide/unhide EventListener -------------*/
+/*-----------------------------------------------------------------------------*/
+// 1) the login page
+const loginPage = document.querySelector("#login-page");
+// 1) the whole game page
+const gamePage = document.querySelector("#game-page");
+// 1) the whole game page
+const rankPage = document.querySelector("#rank-page");
+
+/*-----------------------------------------------------------------------------*/
 /*-------------------------------- Login Part ---------------------------------*/
 /*-----------------------------------------------------------------------------*/
 /** Constants & Variables */
 //LATER: password has to have at least one number, one letter
-let playerName, password, forgotPswd;
+
 let gameMode = "easy";
-// 3 by 4
-let easyModeCardsCnt = 12;
-// 4 by 6
-let hardModeCardsCnt = 24;
+// easy is 3 by 4 and hard is 4 by 6
+let modeCardsCnt = gameMode === "easy" ? 12 : 24;
+// gameOn status
 let gameOn = false;
 ///LOGIN eventListener then
 gameOn = true;
-/** Event Listeners */
-const loginPage = document.querySelector("#login-page");
+
+const playerName = document.getElementById("userName");
+const playerEmail = document.getElementById("userEmail");
+// console.log(playerName, playerEmail);
+const form = document.getElementById("form");
+
+form.addEventListener("submit", (event) => {
+  event.defaultPrevented;
+});
+
+////////////////////////////
+// reveal login page and hide rest two pages
 
 /*-----------------------------------------------------------------------------*/
 /*-------------------------------- Game Part ----------------------------------*/
 /*-----------------------------------------------------------------------------*/
+
+//// hide game part, work on login Part
 
 /** Constants & Variables */
 // 1.0) an array with all the cards image database
@@ -88,7 +109,7 @@ arrCardsDatabase = [
 // randomly chose same card without repeating
 // code is inspired from: https://stackoverflow.com/questions/17891173/how-to-efficiently-randomly-select-array-item-without-repeats
 let copy = arrCardsDatabase.slice(0);
-while (arrCards.length < easyModeCardsCnt) {
+while (arrCards.length < modeCardsCnt) {
   let randomCardIndex = Math.floor(Math.random() * copy.length);
   let item = copy[randomCardIndex];
   arrCards.push(item);
@@ -96,24 +117,8 @@ while (arrCards.length < easyModeCardsCnt) {
   copy.splice(randomCardIndex, 1);
 }
 
-// arrCards = [
-//   { name: "fry", front: "img/characters/fry.png" },
-//   { name: "fry", front: "img/characters/fry.png" },
-//   { name: "homer-simpson", front: "img/characters/homer-simpson.png" },
-//   { name: "homer-simpson", front: "img/characters/homer-simpson.png" },
-//   { name: "homer-simpson-burnt", front: "img/characters/homer-simpson-burnt.png" },
-//   { name: "homer-simpson-burnt", front: "img/characters/homer-simpson-burnt.png" },
-//   { name: "mom", front: "img/characters/mom.png" },
-//   { name: "mom", front: "img/characters/mom.png" },
-//   { name: "professor-farnsworth", front: "img/characters/professor-farnsworth.png" },
-//   { name: "professor-farnsworth", front: "img/characters/professor-farnsworth.png" },
-//   { name: "zoidberg", front: "img/characters/zoidberg.png" },
-//   { name: "zoidberg", front: "img/characters/zoidberg.png" },
-// ];
-
 /**  Cached Element References ********************************/
-// 1) the whole game page
-const gamePage = document.querySelector("#game-page");
+
 // 2) the card container
 const gameContainer = document.querySelector(".grid-container");
 // 3) class element of cards image will be created right after createCards
@@ -418,6 +423,7 @@ function resetClick(event) {
   // ////////////////////////////////////////////////////////
   // call randomize background img, cards function, showCards1s function...
   notificationEle.textContent = "New Game";
+  // new background
   randomizeBackgroundImg();
   randomizeCards();
   firstGlanceStart();
