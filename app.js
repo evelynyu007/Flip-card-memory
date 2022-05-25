@@ -15,25 +15,16 @@ const rankPage = document.querySelector("#rank-page");
 let gameMode = "easy";
 // easy is 3 by 4 and hard is 4 by 6
 let modeCardsCnt = gameMode === "easy" ? 12 : 24;
-// gameOn status
-let gameOn = false;
-///LOGIN eventListener then
-gameOn = true;
-
-// const userName = document.getElementById("userName");
-// const userEmail = document.getElementById("userEmail");
+// form element
 const form = document.getElementById("form");
 
 /*-----------------------------------------------------------------------------*/
 /*-------------------------------- Game Part ----------------------------------*/
 /*-----------------------------------------------------------------------------*/
 
-//// hide game part, work on login Part
-
 /** Constants & Variables */
 // 1.0) an array with all the cards image database
 let arrCardsDatabase = [];
-let randomCardIndexArr = [];
 // 1.1) an array wwith objects to represent all the cards and the blank card
 let arrCards = [];
 let arrIds = [];
@@ -142,6 +133,30 @@ const enableHint = function () {
 };
 restartButton.addEventListener("click", resetClick);
 
+/** Start the first Game ********************************************************/
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  console.log("form has been submitted");
+  //grab user info
+  const userName = document.getElementById("userName").value;
+  const userEmail = document.getElementById("userEmail").value;
+  //update player's name
+  playerName.textContent = userName;
+
+  //jump to game page
+  loginPage.style.display = "none";
+  gamePage.style.display = "block";
+
+  //start game
+  changeBackgroundImg(startImg);
+  createCards();
+  firstGlanceStart();
+  firstGlanceStop();
+  enableHint();
+  startToClick();
+  startTimer();
+});
+
 /** FUNCTIONS *********************************************************/
 //////////////////////////
 // Randomize Cards Pattern
@@ -236,7 +251,6 @@ function checkAllCardsFound() {
     // update background img
     headInfoEle.style.backgroundImage = gameWinImg;
     // stop clicking...
-    gameOn = false;
     gameContainer.removeEventListener("click", flipCard);
     hintButton.removeEventListener("click", hintClick);
   }
@@ -348,7 +362,6 @@ function timerFunc() {
       // stop shaking
       removeCardsShaking();
       // stop clicking...
-      gameOn = false;
       gameContainer.removeEventListener("click", flipCard);
       hintButton.removeEventListener("click", hintClick);
       // update background img
@@ -387,15 +400,12 @@ function startTimer() {
 /** restart/initialize the game */
 function resetClick(event) {
   console.log("🔂 restart the game");
-  // Game on
-  gameOn = true;
   // House Cleaning
   selectedTwoCardsName.length = 0;
   selectedTwoCardsID.length = 0;
   selectedAllCardsName.length = 0;
   selectedAllCardsId.length = 0;
   cardsIdNotFoundYet.length = 0;
-  randomCardIndexArr.lenght = 0;
 
   score = 0;
   scoreEle.textContent = score;
@@ -464,29 +474,3 @@ function hintClick(event) {
     selectedTwoCardsName.length = 0;
   }, 1000);
 }
-
-/** Start the first Game ***************************************/
-
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
-  console.log("form has been submitted");
-  //grab user info
-  const userName = document.getElementById("userName").value;
-  const userEmail = document.getElementById("userEmail").value;
-  //update player's name
-  playerName.textContent = userName;
-
-  //jump to game page
-  loginPage.style.display = "none";
-  gamePage.style.display = "block";
-
-  // document.addEventListener("DOMContentLoaded", () => {
-  changeBackgroundImg(startImg);
-  createCards();
-  firstGlanceStart();
-  firstGlanceStop();
-  enableHint();
-  startToClick();
-  startTimer();
-  // });
-});
