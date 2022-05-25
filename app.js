@@ -5,6 +5,10 @@
 //LATER: password has to have at least one number, one letter
 let playerName, password, forgotPswd;
 let gameMode = "easy";
+// 3 by 4
+let easyModeCardsCnt = 12;
+// 4 by 6
+let hardModeCardsCnt = 24;
 let gameOn = false;
 ///LOGIN eventListener then
 gameOn = true;
@@ -16,6 +20,9 @@ const loginPage = document.querySelector("#login-page");
 /*-----------------------------------------------------------------------------*/
 
 /** Constants & Variables */
+// 1.0) an array with all the cards image database
+let arrCardsDatabase = [];
+let randomCardIndexArr = [];
 // 1.1) an array wwith objects to represent all the cards and the blank card
 let arrCards = [];
 let arrIds = [];
@@ -28,7 +35,7 @@ let selectedAllCardsName = [];
 // 1.5) an array to represent selected Correct cards ids
 let selectedAllCardsId = [];
 // 1.6) store all the unfound cards id
-const cardsIdNotFoundYet = [];
+let cardsIdNotFoundYet = [];
 // 2) score to represent current score
 let score = 0;
 // 3) 60 seconds timer
@@ -61,22 +68,48 @@ let timeInterval;
 // 8) showAllCards function finished? default: no
 let showAllCardsFunc = false;
 
-// create cards and data class into Grid
+// cards image database
 // prettier-ignore
-arrCards = [
-  { name: "fry", front: "img/characters/fry.png" },
+arrCardsDatabase = [
   { name: "fry", front: "img/characters/fry.png" },
   { name: "homer-simpson", front: "img/characters/homer-simpson.png" },
-  { name: "homer-simpson", front: "img/characters/homer-simpson.png" },
-  { name: "homer-simpson-burnt", front: "img/characters/homer-simpson-burnt.png" },
   { name: "homer-simpson-burnt", front: "img/characters/homer-simpson-burnt.png" },
   { name: "mom", front: "img/characters/mom.png" },
-  { name: "mom", front: "img/characters/mom.png" },
-  { name: "professor-farnsworth", front: "img/characters/professor-farnsworth.png" },
   { name: "professor-farnsworth", front: "img/characters/professor-farnsworth.png" },
   { name: "zoidberg", front: "img/characters/zoidberg.png" },
-  { name: "zoidberg", front: "img/characters/zoidberg.png" },
-];
+  { name: "ironman", front: "img/characters/iron-man.png" },
+  { name: "zapp", front: "img/characters/zapp-brannigan.png" },
+  { name: "white", front: "img/characters/walter-white.png" },
+  { name: "venom", front: "img/characters/venom-head.png" },
+  { name: "hermes", front: "img/characters/hermes-conrad.png" },
+  { name: "naruto", front: "img/characters/naruto.png" },];
+
+// Easy mode: select 6 cards from the database, repeat them twice, 12 cards in total
+// randomly chose same card without repeating
+// code is inspired from: https://stackoverflow.com/questions/17891173/how-to-efficiently-randomly-select-array-item-without-repeats
+let copy = arrCardsDatabase.slice(0);
+while (arrCards.length < easyModeCardsCnt) {
+  let randomCardIndex = Math.floor(Math.random() * copy.length);
+  let item = copy[randomCardIndex];
+  arrCards.push(item);
+  arrCards.push(item);
+  copy.splice(randomCardIndex, 1);
+}
+
+// arrCards = [
+//   { name: "fry", front: "img/characters/fry.png" },
+//   { name: "fry", front: "img/characters/fry.png" },
+//   { name: "homer-simpson", front: "img/characters/homer-simpson.png" },
+//   { name: "homer-simpson", front: "img/characters/homer-simpson.png" },
+//   { name: "homer-simpson-burnt", front: "img/characters/homer-simpson-burnt.png" },
+//   { name: "homer-simpson-burnt", front: "img/characters/homer-simpson-burnt.png" },
+//   { name: "mom", front: "img/characters/mom.png" },
+//   { name: "mom", front: "img/characters/mom.png" },
+//   { name: "professor-farnsworth", front: "img/characters/professor-farnsworth.png" },
+//   { name: "professor-farnsworth", front: "img/characters/professor-farnsworth.png" },
+//   { name: "zoidberg", front: "img/characters/zoidberg.png" },
+//   { name: "zoidberg", front: "img/characters/zoidberg.png" },
+// ];
 
 /**  Cached Element References ********************************/
 // 1) the whole game page
@@ -365,6 +398,7 @@ function resetClick(event) {
   selectedAllCardsName.length = 0;
   selectedAllCardsId.length = 0;
   cardsIdNotFoundYet.length = 0;
+  randomCardIndexArr.lenght = 0;
 
   score = 0;
   scoreEle.textContent = score;
