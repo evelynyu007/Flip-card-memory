@@ -22,13 +22,9 @@ body {
   background-size: 100% 100%;
   background-color: #353333;
 }
-#forgot-pswd {
-  color: blue;
-  text-decoration: blue underline;
-}
 .agreement {
-  color: blue;
-  text-decoration: blue;
+  color: rgb(54, 54, 210);
+  text-decoration: blue underline;
 }
 form {
   display: block;

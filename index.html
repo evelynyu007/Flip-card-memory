@@ -17,7 +17,7 @@
   <body>
     <!-- Login Page ----------------------------------------------------->
     <div id="login-page">
-      <form id="form" action="/" method="get">
+      <form id="form">
         <h2>Create Your Account</h2>
         <label for="userName">Username:</label>
         <input type="text" name="userName" id="userName" required />
@@ -42,22 +42,23 @@
         <input type="checkbox" name="agreement" value="agreement" required />
         <label for="agreenment"
           >I have read and agree to the terms and conditions of the
-          <span class="agreement">Flip Card Memory Game® Agreement</span></label
+          <a
+            href="https://github.com/evelynyu007/Flip-card-memory"
+            class="agreement"
+            target="_blank"
+            >Flip Card Memory Game® Readme</a
+          ></label
         >
-        <!--will add logic, box must be checked -->
-        <!--will add link to flip card memory agreement -->
         <button type="submit" id="button-login" class="btn btn-success btn-lg">
           Login
         </button>
       </form>
-
-      <!-- <p id="forgot-pswd">Forgot your password</p> -->
     </div>
 
     <!-- Game Page -------------------------------------------------------->
     <div id="game-page">
       <section class="head-info">
-        <h2>Player: <span>playerName</span></h2>
+        <h2>Player: <span id="playerName">playerName</span></h2>
         <h2>Mode: <span>Easy</span></h2>
         <h2>Score: <span id="score">0</span></h2>
         <h2>Timer: <span id="restSeconds"></span></h2>
@@ -93,6 +94,5 @@
     </div>
 
     <script type="module" src="app.js"></script>
-    <!-- <script type="module" src="game.js"></script> -->
   </body>
 </html>

@@ -12,8 +12,6 @@ const rankPage = document.querySelector("#rank-page");
 /*-------------------------------- Login Part ---------------------------------*/
 /*-----------------------------------------------------------------------------*/
 /** Constants & Variables */
-//LATER: password has to have at least one number, one letter
-
 let gameMode = "easy";
 // easy is 3 by 4 and hard is 4 by 6
 let modeCardsCnt = gameMode === "easy" ? 12 : 24;
@@ -22,17 +20,9 @@ let gameOn = false;
 ///LOGIN eventListener then
 gameOn = true;
 
-const playerName = document.getElementById("userName");
-const playerEmail = document.getElementById("userEmail");
-// console.log(playerName, playerEmail);
+// const userName = document.getElementById("userName");
+// const userEmail = document.getElementById("userEmail");
 const form = document.getElementById("form");
-
-form.addEventListener("submit", (event) => {
-  event.defaultPrevented;
-});
-
-////////////////////////////
-// reveal login page and hide rest two pages
 
 /*-----------------------------------------------------------------------------*/
 /*-------------------------------- Game Part ----------------------------------*/
@@ -126,6 +116,8 @@ let cardsImgClass;
 // 4) store the rest time and initialize the content
 let restSeconds = document.querySelector("#restSeconds");
 restSeconds.textContent = timer;
+// 5) playerName on webpage
+let playerName = document.querySelector("#playerName");
 // 5) score on webpage
 let scoreEle = document.querySelector("#score");
 // 6) all the cards id
@@ -474,7 +466,21 @@ function hintClick(event) {
 }
 
 /** Start the first Game ***************************************/
-document.addEventListener("DOMContentLoaded", () => {
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  console.log("form has been submitted");
+  //grab user info
+  const userName = document.getElementById("userName").value;
+  const userEmail = document.getElementById("userEmail").value;
+  //update player's name
+  playerName.textContent = userName;
+
+  //jump to game page
+  loginPage.style.display = "none";
+  gamePage.style.display = "block";
+
+  // document.addEventListener("DOMContentLoaded", () => {
   changeBackgroundImg(startImg);
   createCards();
   firstGlanceStart();
@@ -482,8 +488,5 @@ document.addEventListener("DOMContentLoaded", () => {
   enableHint();
   startToClick();
   startTimer();
+  // });
 });
-
-/*------------------------------------------------------------------------------*/
-/*-------------------------------- Ranking Part (optional)----------------------*/
-/*------------------------------------------------------------------------------*/
