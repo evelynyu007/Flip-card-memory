@@ -26,25 +26,28 @@
         <input type="email" name="userEmail" id="userEmail" />
         <br />
 
-        <p>Choose a mode:</p>
-        <input
-          type="radio"
-          id="easyMode"
-          name="mode"
-          value="easy"
-          checked="checked"
-        />
-        <label for="easyMode">Easy</label>
-        <input type="radio" id="hardMode" name="mode" value="hard" />
-        <label for="hardMode">Hard</label>
+        <div id="chooseMode">
+          <p>Choose a mode:</p>
+          <input
+            type="radio"
+            id="easyMode"
+            name="mode"
+            value="easy"
+            checked="checked"
+          />
+          <label for="easyMode">Easy</label>
+          <input type="radio" id="hardMode" name="mode" value="hard" />
+          <label for="hardMode">Hard</label>
+        </div>
+
         <br />
 
         <input type="checkbox" name="agreement" value="agreement" required />
-        <label for="agreenment"
+        <label for="agreenment" class="agreement"
           >I have read and agree to the terms and conditions of the
           <a
             href="https://github.com/evelynyu007/Flip-card-memory"
-            class="agreement"
+            class="agreementLink"
             target="_blank"
             >Flip Card Memory Game® Readme</a
           ></label
