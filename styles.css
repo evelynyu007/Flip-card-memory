@@ -55,16 +55,21 @@ body {
   margin-bottom: 50px;
   padding: 20px 20px;
   height: 400px;
-}
-
-h2 {
-  position: relative;
   text-align: center;
 }
 
+h2 {
+  background-color: rgb(232, 228, 228);
+  width: fit-content;
+}
+
 .notification {
-  margin-top: 40px;
+  background-color: rgb(232, 228, 228);
+  margin-top: 60px;
   font-size: 60px;
+  display: inline-block;
+  width: fit-content;
+  white-space: nowrap;
 }
 
 /* shake all the cards */

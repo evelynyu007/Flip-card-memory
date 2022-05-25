@@ -32,7 +32,7 @@ const cardsIdNotFoundYet = [];
 // 2) score to represent current score
 let score = 0;
 // 3) 60 seconds timer
-let timer = 3;
+let timer = 60;
 // 4) 3 seconds to stop the firstGlance
 let timeToHide = 3000;
 // 4.1) show the firstGlance countdown
@@ -49,6 +49,7 @@ const startImgArr = [
   "url('img/background-burst-rays-shadow-sunburst-yellow-turquoise.png')",
   "url('img/background-white-3d-cubes-red.png')",
   "url('img/background-rick.jpeg')",
+  "url('img/background-circles-violet-rings-lime-concentric-5120x2880-c2-67ac49-cf46fd-k2-0-0-l-288-f-25.png')",
 ];
 let randomImg = Math.floor(Math.random() * startImgArr.length);
 let startImg = startImgArr[randomImg];
@@ -322,6 +323,8 @@ const timerFunc = function () {
       hintButton.removeEventListener("click", hintClick);
       // update background img
       headInfoEle.style.backgroundImage = gameOverImg;
+      // timer shows as 0
+      restSeconds.textContent = 0;
     }
   }, 1000);
 };
@@ -364,7 +367,10 @@ function resetClick(event) {
   cardsIdNotFoundYet.length = 0;
 
   score = 0;
+  scoreEle.textContent = score;
   timer = 60;
+  restSeconds.textContent = timer;
+
   //remove shaking class? edge case: click restart when shaking
   removeCardsShaking();
 
@@ -377,6 +383,7 @@ function resetClick(event) {
 
   // ////////////////////////////////////////////////////////
   // call randomize background img, cards function, showCards1s function...
+  notificationEle.textContent = "New Game";
   randomizeBackgroundImg();
   randomizeCards();
   firstGlanceStart();
