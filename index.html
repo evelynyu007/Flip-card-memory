@@ -55,13 +55,22 @@
         <button type="submit" id="button-login" class="btn btn-success btn-lg">
           Login
         </button>
+        <button
+          type="submit"
+          id="button-direct"
+          value="ignore"
+          formnovalidate
+          class="btn btn-warning btn-sm"
+        >
+          Play the Game without Sign in
+        </button>
       </form>
     </div>
 
     <!-- Game Page -------------------------------------------------------->
     <div id="game-page">
       <section class="head-info">
-        <h2>Player: <span id="playerName">playerName</span></h2>
+        <h2>Player: <span id="playerName">Anonymous</span></h2>
         <h2>Mode: <span>Easy</span></h2>
         <h2>Score: <span id="score">0</span></h2>
         <h2>Timer: <span id="restSeconds"></span></h2>

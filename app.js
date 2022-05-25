@@ -123,6 +123,9 @@ let flipTwoBack;
 const notificationEle = document.querySelector(".notification");
 // 11) Head-info
 const headInfoEle = document.querySelector(".head-info");
+// 12) login page button - login and direct login
+const loginButton = document.getElementById("button-login");
+const directButton = document.getElementById("button-direct");
 
 /**  addEventListener or capsulized addEventListener *****************************************/
 const addClicks = function () {
@@ -134,7 +137,8 @@ const enableHint = function () {
 restartButton.addEventListener("click", resetClick);
 
 /** Start the first Game ********************************************************/
-form.addEventListener("submit", (event) => {
+
+loginButton.addEventListener("click", (event) => {
   event.preventDefault();
   console.log("form has been submitted");
   //grab user info
@@ -143,6 +147,23 @@ form.addEventListener("submit", (event) => {
   //update player's name
   playerName.textContent = userName;
 
+  //jump to game page
+  loginPage.style.display = "none";
+  gamePage.style.display = "block";
+
+  //start game
+  changeBackgroundImg(startImg);
+  createCards();
+  firstGlanceStart();
+  firstGlanceStop();
+  enableHint();
+  startToClick();
+  startTimer();
+});
+
+////or direct login without signin
+directButton.addEventListener("click", (event) => {
+  event.preventDefault();
   //jump to game page
   loginPage.style.display = "none";
   gamePage.style.display = "block";
