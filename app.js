@@ -145,15 +145,15 @@ restartButton.addEventListener("click", resetClick);
 /** FUNCTIONS *********************************************************/
 //////////////////////////
 // Randomize Cards Pattern
-const randomizeCards = function () {
+function randomizeCards() {
   arrCards.sort(() => (Math.random() > 0.5 ? 1 : -1));
   console.log(arrCards);
-};
+}
 ///////////////////////////
 // change background image
-const changeBackgroundImg = function (img) {
+function changeBackgroundImg(img) {
   headInfoEle.style.backgroundImage = img;
-};
+}
 
 // Randomize background image
 function randomizeBackgroundImg() {
@@ -164,7 +164,7 @@ function randomizeBackgroundImg() {
 
 //////////////////////////////////////////////////////////////
 // create only for the first time and append to grid-container
-const createCards = function () {
+function createCards() {
   // once createCards it will show up in the webpage so hide it
   gameContainer.classList.add("hide");
   // call the randomize function - randomize before creating id -then id will always from 0 ..11
@@ -184,11 +184,11 @@ const createCards = function () {
   console.info("create all the cards");
   //create elements reference - all cards class
   cardsImgClass = document.querySelectorAll(".cardsImg");
-};
+}
 
 ////////////////////////////////////////////
 // show all the cards (aka the first glance)
-const showAllCards = function () {
+function showAllCards() {
   gameContainer.classList.contains("hide") &&
     gameContainer.classList.remove("hide");
   notificationEle.textContent = "Take a Quick Glance";
@@ -201,19 +201,19 @@ const showAllCards = function () {
     i++;
   });
   console.info("show the first Glance");
-};
+}
 //////////////////////////////
 // Replace cards by blank card
-const createBlankCards = function () {
+function createBlankCards() {
   notificationEle.textContent = "Game Starts";
   cardsImgClass.forEach((card) => {
     card.src = blankCard;
   });
   console.info("stop the first Glance");
-};
+}
 ///////////////////////
 // remove cards shaking
-const removeCardsShaking = function () {
+function removeCardsShaking() {
   cardsImgClass.forEach((card) => {
     card.classList.contains("shaking") && card.classList.remove("shaking");
   });
@@ -221,11 +221,11 @@ const removeCardsShaking = function () {
     gameContainer.classList.remove("shaking");
   notificationEle.classList.contains("shaking") &&
     notificationEle.classList.remove("shaking");
-};
+}
 
 ///////////////////////////
 // check if all cards found
-const checkAllCardsFound = function () {
+function checkAllCardsFound() {
   if (selectedAllCardsName.length === arrCards.length) {
     console.log("🎉congratulaions!");
     notificationEle.textContent = "🎉You are the best!";
@@ -240,7 +240,7 @@ const checkAllCardsFound = function () {
     gameContainer.removeEventListener("click", flipCard);
     hintButton.removeEventListener("click", hintClick);
   }
-};
+}
 
 // Add Event Listeners to the gameContainer instead of cardsImgClass
 // the app should wait for the user to click a square and call a handleClick function
@@ -321,7 +321,7 @@ function flipCard(event) {
 /** 60s timer *************************************************/
 // -1s every second after game begins
 // move timeInterval as a global variable
-const timerFunc = function () {
+function timerFunc() {
   timeInterval = setInterval(function () {
     timer--;
     restSeconds.textContent = timer;
@@ -357,31 +357,31 @@ const timerFunc = function () {
       restSeconds.textContent = 0;
     }
   }, 1000);
-};
+}
 
 /** setTimeOut  *******************************************/
 
 // NOTE: Tried a true/false showAllCardsFunc, it didn't work..
 ////////////////////////////
 // Show all the card in 1 s
-const firstGlanceStart = function () {
+function firstGlanceStart() {
   setTimeout(showAllCards, 1000);
-};
+}
 /////////////////////////////////////
 // Hide all the card in x + 1 seconds
-const firstGlanceStop = function () {
+function firstGlanceStop() {
   setTimeout(createBlankCards, timeToHide + 1000);
-};
+}
 /////////////////
 // Start to click
-const startToClick = function () {
+function startToClick() {
   setTimeout(addClicks, timeToHide + 1000);
-};
+}
 //////////////
 // Start timer
-const startTimer = function () {
+function startTimer() {
   setTimeout(timerFunc, timeToHide + 1000);
-};
+}
 
 //////////////////////////////////
 /** restart/initialize the game */
