@@ -17,13 +17,24 @@
   <body>
     <!-- Login Page ----------------------------------------------------->
     <div id="login-page">
-      <form id="form">
+      <form id="form" action="/" method="get">
         <h2>Create Your Account</h2>
-        <label for="userName">Username:</label>
-        <input type="text" name="userName" id="userName" required />
+        <label for="userName">Name:</label>
+        <input
+          type="text"
+          name="userName"
+          id="userName"
+          placeholder="user name"
+          required
+        />
         <br />
         <label for="userEmail">Email:</label>
-        <input type="email" name="userEmail" id="userEmail" />
+        <input
+          type="email"
+          name="userEmail"
+          id="userEmail"
+          placeholder="@gmail.com"
+        />
         <br />
 
         <div id="chooseMode">
@@ -56,11 +67,10 @@
           Login
         </button>
         <button
-          type="submit"
+          type="button"
           id="button-direct"
-          value="ignore"
-          formnovalidate
           class="btn btn-warning btn-sm"
+          formnovalidate
         >
           Play the Game without Sign in
         </button>

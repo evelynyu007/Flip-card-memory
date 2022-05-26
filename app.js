@@ -17,6 +17,9 @@ let gameMode = "easy";
 let modeCardsCnt = gameMode === "easy" ? 12 : 24;
 // form element
 const form = document.getElementById("form");
+// login page button - login and direct login
+const loginButton = document.getElementById("button-login");
+const directButton = document.getElementById("button-direct");
 
 /*-----------------------------------------------------------------------------*/
 /*-------------------------------- Game Part ----------------------------------*/
@@ -123,9 +126,6 @@ let flipTwoBack;
 const notificationEle = document.querySelector(".notification");
 // 11) Head-info
 const headInfoEle = document.querySelector(".head-info");
-// 12) login page button - login and direct login
-const loginButton = document.getElementById("button-login");
-const directButton = document.getElementById("button-direct");
 
 /**  addEventListener or capsulized addEventListener *****************************************/
 const addClicks = function () {
