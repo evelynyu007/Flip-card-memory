@@ -437,6 +437,11 @@ function resetClick(event) {
   //remove shaking class? edge case: click restart when shaking
   removeCardsShaking();
 
+  //Edge case: add remove event listener, in case player restart the game during playing
+  // stop clicking...
+  gameContainer.removeEventListener("click", flipCard);
+  hintButton.removeEventListener("click", hintClick);
+
   clearTimeout(firstGlanceStart);
   clearTimeout(firstGlanceStop);
   clearTimeout(startToClick);
