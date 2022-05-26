@@ -34,18 +34,28 @@ As a user I want to
   - using hint will cause score -1 point
 - I can play it on phone
 
-Technologies Used
+# Technologies Used
 
 - HTML
 - CSS (Bootstrap)
-- JavaScript (logic and DOM manipulation)
+- JavaScript (logic, function module and DOM manipulation)
 
 # What's next
 
 - Finish Hard mode by using esay mode function module
 - responsive webpage
 
-# version 2022.1.0 product display
+# Version 2022.01.00 Product Display
+
+<img width="914" alt="Screen Shot 2022-05-26 at 10 11 41 AM" src="https://user-images.githubusercontent.com/19142112/170505699-d76bcdd5-9311-4e88-a72f-7698958b5f4f.png">
+
+<img width="924" alt="Screen Shot 2022-05-26 at 10 14 49 AM" src="https://user-images.githubusercontent.com/19142112/170505970-93392871-5680-4aa5-91fc-4bd20bf2cd20.png">
+
+<img width="924" alt="Screen Shot 2022-05-26 at 10 15 21 AM" src="https://user-images.githubusercontent.com/19142112/170505985-97062f53-e6bf-4530-a7eb-81ed44b3abab.png">
+
+<img width="924" alt="Screen Shot 2022-05-26 at 10 16 49 AM" src="https://user-images.githubusercontent.com/19142112/170506213-2a8251fc-e0f4-43e4-b40f-8d17e2e95df3.png">
+
+
 
 # Wireframes:
 
