@@ -10,29 +10,42 @@ Top 50 will be selected into the next round!
 
 As a user I want to
 
-- See a login page and input user name and user password
+- See a login page and input user name and user email
 - Choose a mode - easy or hard
 - Easy has 3 by 4 grid and I need to find 2 same images
 - Hard has 4 by 6 grid and I need to find 3 same images
-- Be able to login to start the game
-- I can restart a new game
-- I will have a different pattern of images for a new game
-- The game will show all the images in 3 seconds (Easy) and 2 seconds(Hard)
+- Be able to login to play the game or play without login
+- I will have a different pattern and different cards for a new game
+- I can restart a new game anytime
+- The game will show all the cards in 3 seconds (Easy) and 2 seconds(Hard)
 - The initial score is 0
-- Start 1 minute timer in a descedning bar or counter
-- Flip two/three same cards at the same time, score + 1
-- Flip two/three different cards at the same time, score -1
-- Find all the same cards, I will hear hooray sound effect
-- Fail to find all the same cards in one mintuer, I will hear Oh No, Oh No, Oh No No No (https://www.youtube.com/watch?v=_t9y1_WRneY)
-- I can use a hint during the game, all the hided cards will be flipped over and in 1 second, only those unselected cards flip back
-- I can enable/disable background music/sound effects by a button
+- Once all the cards flipped back, 1 minute timer starts in a descedning counter
+- Flip two/three same cards at the same time, score + 1 point
+- Flip two/three different cards at the same time, score -1 point
+- After find all the same cards,
+  - I cannot click anymore except restart button
+  - The background will change to celebrate
+- Fail to find all the same cards in one mintuer,
+  - I cannot click anymore except restart button
+  - The background will change to mouring
+- I can use hint during the game,
+  - all the hided cards will be flipped over and in 1 second,
+  - and only those unselected cards flip back
+  - using hint will cause score -1 point
 - I can play it on phone
 
 Technologies Used
 
 - HTML
-- CSS
+- CSS (Bootstrap)
 - JavaScript (logic and DOM manipulation)
+
+# What's next
+
+- Finish Hard mode by using esay mode function module
+- responsive webpage
+
+# version 2022.1.0 product display
 
 # Wireframes:
 
