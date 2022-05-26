@@ -1,10 +1,10 @@
 # Premise
 
 The first National Flip Cards Memory Game will begin on July 4th, 2022.
-Register as a player and Pass this primary election!
+Register as a player and find all the cards to pass this primary election!
 Top 50 will be selected into the next round!
 
-# 🧐 Flip-card-memory 🧐
+# 🧟🧐🧐🧠🧠 Flip-Card-Memory-Game 🧠🧠🧐🧐🧟‍♀️
 
 # User Story
 
@@ -14,24 +14,25 @@ As a user I want to
 - Choose a mode - easy or hard
 - Easy has 3 by 4 grid and I need to find 2 same images
 - Hard has 4 by 6 grid and I need to find 3 same images
-- Be able to login to play the game or play without login
+- Be able to play the game with or without login
+- If I login, I will see my name on the player information section, otherwise it shows "anonymous"
 - I will have a different pattern and different cards for a new game
-- I can restart a new game anytime
-- The game will show all the cards in 3 seconds (Easy) and 2 seconds(Hard)
+- I can start a new game anytime
 - The initial score is 0
+- The game will expose all the cards in 3 seconds (Easy) and 2 seconds(Hard) for a glance
 - Once all the cards flipped back, 1 minute timer starts in a descedning counter
-- Flip two/three same cards at the same time, score + 1 point
-- Flip two/three different cards at the same time, score -1 point
+- Flip two/three same cards at the same time, + 1 point
+- Flip two/three different cards at the same time, -1 point
 - After find all the same cards,
   - I cannot click anymore except restart button
   - The background will change to celebrate
-- Fail to find all the same cards in one mintuer,
+- Fail to find all the same cards in one mintue,
   - I cannot click anymore except restart button
   - The background will change to mouring
 - I can use hint during the game,
-  - all the hided cards will be flipped over and in 1 second,
-  - and only those unselected cards flip back
-  - using hint will cause score -1 point
+  - All the hiden cards will be uncovered in 1 second,
+  - Only unselected cards will be flipped back
+  - Using hint will -1 point
 - I can play it on phone
 
 # Technologies Used
@@ -43,7 +44,7 @@ As a user I want to
 # What's next
 
 - Finish Hard mode by using esay mode function module
-- responsive webpage
+- Responsive webpage
 
 # Version 2022.01.00 Product Display
 
@@ -53,7 +54,9 @@ As a user I want to
 
 <img width="924" alt="Screen Shot 2022-05-26 at 10 15 21 AM" src="https://user-images.githubusercontent.com/19142112/170505985-97062f53-e6bf-4530-a7eb-81ed44b3abab.png">
 
-<img width="924" alt="Screen Shot 2022-05-26 at 10 16 49 AM" src="https://user-images.githubusercontent.com/19142112/170506213-2a8251fc-e0f4-43e4-b40f-8d17e2e95df3.png">
+<img width="924" alt="Screen Shot 2022-05-26 at 10 20 47 AM" src="https://user-images.githubusercontent.com/19142112/170507793-fcac1ee7-b521-4799-9819-a935fb669f2f.png">
+
+<img width="924" alt="Screen Shot 2022-05-26 at 10 23 49 AM" src="https://user-images.githubusercontent.com/19142112/170507808-459778ef-409b-434f-a89a-169afefb74bf.png">
 
 
 
