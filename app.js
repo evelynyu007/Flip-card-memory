@@ -18,7 +18,7 @@ let modeCardsCnt = gameMode === "easy" ? 12 : 24;
 // form element
 const form = document.getElementById("form");
 // login page button - login and direct login
-const loginButton = document.getElementById("button-login");
+// const loginButton = document.getElementById("button-login");
 const directButton = document.getElementById("button-direct");
 
 /*-----------------------------------------------------------------------------*/
@@ -137,15 +137,15 @@ const enableHint = function () {
 restartButton.addEventListener("click", resetClick);
 
 /** Start the first Game ********************************************************/
-
-loginButton.addEventListener("click", (event) => {
+// NOTE: have to use form!
+form.addEventListener("submit", (event) => {
   event.preventDefault();
   console.log("form has been submitted");
   //grab user info
   const userName = document.getElementById("userName").value;
   const userEmail = document.getElementById("userEmail").value;
   //update player's name
-  playerName.textContent = userName;
+  playerName.textContent = userName ? userName : "Anonymous";
 
   //jump to game page
   loginPage.style.display = "none";
@@ -162,6 +162,7 @@ loginButton.addEventListener("click", (event) => {
 });
 
 ////or direct login without signin
+///form with button doesn't work
 directButton.addEventListener("click", (event) => {
   event.preventDefault();
   //jump to game page
