@@ -18,8 +18,9 @@
     <!-- Login Page ----------------------------------------------------->
     <div id="login-page">
       <form id="form" action="/" method="get">
-        <h2>Create Your Account</h2>
-        <label for="userName">Name:</label>
+        <h2>Welcome to Flip Card Memory Game</h2>
+        <br />
+        <label for="userName">Player Name:</label>
         <input
           type="text"
           name="userName"
@@ -27,16 +28,8 @@
           placeholder="user name"
           required
         />
-        <br />
-        <label for="userEmail">Email:</label>
-        <input
-          type="email"
-          name="userEmail"
-          id="userEmail"
-          placeholder="@gmail.com"
-        />
-        <br />
 
+        <br />
         <div id="chooseMode">
           <p>Choose a mode:</p>
           <input
@@ -69,16 +62,17 @@
           value="login"
           class="btn btn-success btn-lg"
         >
-          Login
+          Start to Play
         </button>
+        <span>...or</span>
         <button
           type="submit"
           id="button-direct"
           value="direct"
-          class="btn btn-warning btn-sm"
+          class="btn btn-warning btn-lg"
           formnovalidate
         >
-          Play the Game without Login
+          Play the Game anonymously
         </button>
       </form>
     </div>
@@ -100,27 +94,7 @@
       </button>
     </div>
 
-    <!-- Ranking Page ----------------------------------------------------->
-    <div id="rank-page">
-      <h1>QS</h1>
-      <h1>World Ranking</h1>
-      <h1>Memory</h1>
-      <ul>
-        <ol>
-          #1. User Score:
-        </ol>
-        <ol>
-          #2. Albert Einstein Score:
-        </ol>
-        <ol>
-          #3. Kim Kardashian Score:
-        </ol>
-        <ol>
-          #4. Elon Musk Score:
-        </ol>
-      </ul>
-    </div>
-
     <script type="module" src="app.js"></script>
   </body>
+  <footer>Copyright &copy; 🎃 Wenling Yu 🎃 2022</footer>
 </html>
