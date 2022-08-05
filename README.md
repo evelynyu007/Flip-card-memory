@@ -6,6 +6,10 @@ Top 50 will be selected into the next round!
 
 # 🧟🧐🧐🧠🧠 Flip-Card-Memory-Game 🧠🧠🧐🧐🧟‍♀️
 
+## Play this Game:
+
+https://evelynyu007.github.io/Flip-card-memory/
+
 # User Story
 
 As a user I want to
@@ -13,7 +17,7 @@ As a user I want to
 - See a login page and input user name and user email
 - Choose a mode - easy or hard
 - Easy has 3 by 4 grid and I need to find 2 same images
-- Hard has 4 by 6 grid and I need to find 3 same images
+- Hard has 4 by 6 grid and I need to find 2 same images
 - Be able to play the game with or without login
 - If I login, I will see my name on the player information section, otherwise it shows "anonymous"
 - I will have a different pattern and different cards for a new game
@@ -46,8 +50,7 @@ As a user I want to
 - Finish Hard mode by using esay mode function module
 - Responsive webpage
 
-# Version 2022.01.00 Product Display
-# Play this Game: https://evelynyu007.github.io/Flip-card-memory/
+# Screenshots
 
 <img width="914" alt="Screen Shot 2022-05-26 at 10 11 41 AM" src="https://user-images.githubusercontent.com/19142112/170505699-d76bcdd5-9311-4e88-a72f-7698958b5f4f.png">
 
@@ -58,8 +61,6 @@ As a user I want to
 <img width="924" alt="Screen Shot 2022-05-26 at 10 20 47 AM" src="https://user-images.githubusercontent.com/19142112/170507793-fcac1ee7-b521-4799-9819-a935fb669f2f.png">
 
 <img width="924" alt="Screen Shot 2022-05-26 at 10 23 49 AM" src="https://user-images.githubusercontent.com/19142112/170507808-459778ef-409b-434f-a89a-169afefb74bf.png">
-
-
 
 # Wireframes:
 
