@@ -11,10 +11,10 @@ const rankPage = document.querySelector("#rank-page");
 /*-----------------------------------------------------------------------------*/
 /*-------------------------------- Login Part ---------------------------------*/
 /*-----------------------------------------------------------------------------*/
-/** Constants & Variables */
+/** default easy */
 let gameMode = "easy";
-// easy is 3 by 4 and hard is 4 by 6
-let modeCardsCnt = gameMode === "easy" ? 12 : 24;
+let modeCardsCnt = 12; //3*4
+
 // form element
 const form = document.getElementById("form");
 // login page button - login and direct login
@@ -89,18 +89,6 @@ arrCardsDatabase = [
   { name: "hermes", front: "img/characters/hermes-conrad.png" },
   { name: "naruto", front: "img/characters/naruto.png" },];
 
-// Easy mode: select 6 cards from the database, repeat them twice, 12 cards in total
-// randomly chose same card without repeating
-// code is inspired from: https://stackoverflow.com/questions/17891173/how-to-efficiently-randomly-select-array-item-without-repeats
-let copy = arrCardsDatabase.slice(0);
-while (arrCards.length < modeCardsCnt) {
-  let randomCardIndex = Math.floor(Math.random() * copy.length);
-  let item = copy[randomCardIndex];
-  arrCards.push(item);
-  arrCards.push(item);
-  copy.splice(randomCardIndex, 1);
-}
-
 /**  Cached Element References ********************************/
 
 // 2) the card container
@@ -143,9 +131,35 @@ form.addEventListener("submit", (event) => {
   console.log("form has been submitted");
   //grab user info
   const userName = document.getElementById("userName").value;
-  const userEmail = document.getElementById("userEmail").value;
+
   //update player's name
   playerName.textContent = userName ? userName : "Anonymous";
+
+  // Game mode: easy or hard
+  const gameMode_user = document.getElementsByName("mode");
+  if (gameMode_user[0].checked) {
+    gameMode = "easy";
+  } else {
+    gameMode = "hard";
+  }
+
+  // easy is 3 by 4 and hard is 4 by 5
+  modeCardsCnt = gameMode === "easy" ? 12 : 20;
+  console.log("modeCardsCnt: " + modeCardsCnt);
+
+  // Easy mode: select 6 cards from the database, repeat  twice, 12 cards in total
+  // Hard Mode: select 10 cards from the database, repeat twice, 20 cards in total
+  // randomly chose same card without repeating
+  // code is inspired from: https://stackoverflow.com/questions/17891173/how-to-efficiently-randomly-select-array-item-without-repeats
+  let copy = arrCardsDatabase.slice(0);
+
+  while (arrCards.length < modeCardsCnt) {
+    let randomCardIndex = Math.floor(Math.random() * copy.length);
+    let item = copy[randomCardIndex];
+    arrCards.push(item);
+    arrCards.push(item);
+    copy.splice(randomCardIndex, 1);
+  }
 
   //jump to game page
   loginPage.style.display = "none";

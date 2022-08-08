@@ -17,7 +17,7 @@ As a user I want to
 - See a login page and input user name and user email
 - Choose a mode - easy or hard
 - Easy has 3 by 4 grid and I need to find 2 same images
-- Hard has 4 by 6 grid and I need to find 2 same images
+- Hard has 4 by 5 grid and I need to find 2 same images
 - Be able to play the game with or without login
 - If I login, I will see my name on the player information section, otherwise it shows "anonymous"
 - I will have a different pattern and different cards for a new game
