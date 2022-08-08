@@ -4,7 +4,7 @@ The first National Flip Cards Memory Game will begin on July 4th, 2022.
 Register as a player and find all the cards to pass this primary election!
 Top 50 will be selected into the next round!
 
-# 🧐🧐🧠🧠 Flip-Card-Memory-Game 🧠🧠🧐🧐🧟
+# 🧐 Flip-Card-Memory-Game 🧐
 
 ## Play this Game:
 
@@ -44,11 +44,6 @@ As a user I want to
 - HTML
 - CSS (Bootstrap)
 - Vanilla JavaScript (logic, function module and DOM manipulation)
-
-# What's next
-
-- Finish Hard mode by using esay mode function module
-- Responsive webpage
 
 # Screenshots
 
